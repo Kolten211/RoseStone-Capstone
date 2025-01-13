@@ -39,7 +39,7 @@ def create_phrase():
     
     return new_phrase.to_dict(), 201
 
-@phrase_routes.rotue('/<int:phrase_id>', methods=['PUT'])
+@phrase_routes.route('/<int:phrase_id>', methods=['PUT'])
 @login_required
 def update_phrase(phrase_id):
     """
@@ -49,7 +49,7 @@ def update_phrase(phrase_id):
     data = request.json
     phrase = Phrase.query.get(phrase_id)
 
-    if not word:
+    if not phrase:
         return {'message': 'Phrase not found'}, 400
     
     if 'use' in data:
@@ -74,4 +74,4 @@ def delete_phrase(phrase_id):
     db.session.delete(phrase)
     db.session.commit()
 
-    return {'message': 'phrase deleted successfully'}
+    return {'message': 'Phrase deleted successfully'}

@@ -4,10 +4,13 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, Word
+from .models import db, User 
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.words_routes import word_routes
+from .api.phrase_routes import phrase_routes
+from .api.lesson_routes import lesson_routes
+from .api.translate_route import translate_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -30,6 +33,9 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(word_routes, url_prefix='/api/word')
+app.register_blueprint(phrase_routes, url_prefix='/api/phrase')
+app.register_blueprint(lesson_routes, url_prefix='/api/lesson')
+app.register_blueprint(translate_routes, url_prefix='/api/translate')
 db.init_app(app)
 Migrate(app, db)
 
