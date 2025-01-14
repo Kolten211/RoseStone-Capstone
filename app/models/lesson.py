@@ -8,8 +8,7 @@ class Lesson(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(45))
-    word_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('words.id')), nullable=False)
-    phrase_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('phrases.id')))
+    difficulty = db.Column(db.String(25))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('user.id')))
     description = db.Column(db.String(255), nullable=False)
 
@@ -17,12 +16,12 @@ class Lesson(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'word_id': self.word_id,
-            'phrase_id': self.phrase_id,
+            'difficulty': self.difficulty,
+            'user_id': self.user_id,
             'decription': self.description
         }
     
 
-from .word import Word
-from .phrase import Phrase
+# from .word import Word
+# from .phrase import Phrase
 from .user import User

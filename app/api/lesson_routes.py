@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models.db import db
-from app.models import Lesson
+from app.models import Lesson, Word, Phrase
 
 lesson_routes =  Blueprint('lesson', __name__)
 
@@ -26,11 +26,26 @@ def create_lesson():
     """
 
     lesson_data = request.get_json()
-
+    
     if not lesson_data:
         return {"message": "Invalid request body"}, 400
     
+    word_ids = lesson_data.get('word_ids', [])
+
+    phrase_ids = lesson_data.get('phrase_ids', [])
+
     new_lesson = Lesson(**lesson_data)
+
+    for word_id  in word_ids:
+        word = Word.query.get(word_id)
+        if word:
+            new_lesson.words.append(word)
+
+    for phrase_id in phrase_ids:
+        phrase = Phrase.query.get(phrase_id)
+        if phrase:
+            new_lesson.phrases.append(phrase)
+
     db.session.add(new_lesson)
     db.session.commit()
     
