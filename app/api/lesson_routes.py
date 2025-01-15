@@ -11,10 +11,9 @@ def lessons():
     """
     Query Lessons that a user can add
     """
+    current_user
 
     lessons = Lesson.query.all()
-
-    user_lessons = Lesson.query.filter
 
     return {"lessons": [lesson.to_dict for lesson in lessons]}
 

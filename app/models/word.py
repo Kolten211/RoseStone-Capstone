@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-
+from sqlalchemy.orm import relationship
 class Word(db.Model):
     __tablename__ = 'words'
 
@@ -11,6 +11,7 @@ class Word(db.Model):
     translation = db.Column(db.String(25))
     part_of_speach = db.Column(db.String(25))
     learned = db.Column(db.Boolean, default=False)
+    lessons = relationship('Lesson', secondary='lessons_words', backref=db.backref('words', lazy=True))
 
     def to_dict(self):
         return {

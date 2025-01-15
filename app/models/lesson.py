@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from sqlalchemy.orm import relationship
 
 class Lesson(db.Model):
     __tablename__='lessons'
@@ -9,8 +10,10 @@ class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(45))
     difficulty = db.Column(db.String(25))
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('user.id')))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
     description = db.Column(db.String(255), nullable=False)
+    words = relationship('Word', secondary='lessons_words', backref=db.backref('lessons', lazy=True))
+    phrases = relationship('Phrase', secondary='lesson_phrases', backref=db.backref('phrases', lazy=True))
 
     def to_dict(self):
         return {
