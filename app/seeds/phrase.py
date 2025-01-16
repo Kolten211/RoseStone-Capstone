@@ -21,10 +21,10 @@ def seed_phrases():
     db.session.add_all(phrases)
     db.session.commit()
 
-    def undo_phrases():
-        if environment == "production":
-            db.session.execute(f"TRUNCATE table {SCHEMA}.phrases RESTART IDENTITY CASCADE;")
-        else:
-            db.session.execute(text("DELETE FROM phrases"))
-        
-    db.session.commit()
+def undo_phrases():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.phrases RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM phrases"))
+    
+db.session.commit()

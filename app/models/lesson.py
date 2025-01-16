@@ -12,8 +12,8 @@ class Lesson(db.Model):
     difficulty = db.Column(db.String(25))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
     description = db.Column(db.String(255), nullable=False)
-    words = relationship('Word', secondary='lessons_words', backref=db.backref('lessons', lazy=True))
-    phrases = relationship('Phrase', secondary='lesson_phrases', backref=db.backref('phrases', lazy=True))
+    words = relationship('Word', secondary='lessons_words', backref=db.backref('Vocabulary', lazy='dynamic'))
+    phrases = relationship('Phrase', secondary='lessons_phrases', backref=db.backref('Sentences', lazy='dynamic'))
 
     def to_dict(self):
         return {
@@ -25,6 +25,6 @@ class Lesson(db.Model):
         }
     
 
-# from .word import Word
-# from .phrase import Phrase
+from .word import Word
+from .phrase import Phrase
 from .user import User
