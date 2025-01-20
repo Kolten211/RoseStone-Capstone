@@ -10,7 +10,7 @@ class Word(db.Model):
     word = db.Column(db.String(25), nullable = False) ##, unique = True
     translation = db.Column(db.String(25))
     part_of_speech = db.Column(db.String(25))
-    learned = db.Column(db.Boolean, default=False)
+    
     lessons = relationship('Lesson', secondary='lessons_words', backref=db.backref('Vocabulary', lazy='dynamic'))
 
     def to_dict(self):

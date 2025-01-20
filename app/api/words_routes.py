@@ -1,9 +1,9 @@
 from flask import Blueprint, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.models.db import db
-from app.models import Word
+from app.models import Word, LearnedWord
 
-word_routes = Blueprint('word', __name__)
+word_routes = Blueprint('words', __name__)
 
 
 @word_routes.route('/')
@@ -13,7 +13,7 @@ def words():
     Query all learned/added words a user
     """
 
-    words = Word.query.filter_by(learned=True).all() 
+    words = Word.query.all() 
 
     return {'words': [word.to_dict() for word in words]}
 
@@ -34,7 +34,11 @@ def create_word():
         return {"message": "Word already exists"}, 409
     
     new_word = Word(**word_data)
-    db.session.add(new_word)
+    # db.session.add(new_word)
+    # db.session.commit()
+
+    new_learned_word = LearnedWord(user_id=current_user.id, word_id=new_word)
+    db.session.add(new_learned_word)
     db.session.commit()
     
     return new_word.to_dict(), 201
@@ -47,7 +51,8 @@ def update_word(word_id):
     """
 
     data = request.json
-    word = Word.query.get(word_id)
+    word = LearnedWord.query.filter_by(user_id = current_user.id, word_id = word_id).first()
+
 
     if not word:
         return {'message': 'Word not found'}, 404
@@ -66,12 +71,12 @@ def delete_word(word_id):
     Delete a word from learned words
     """
 
-    word = Word.query.get(word_id)
+    word = LearnedWord.query.filter_by(user_id = current_user.id, word_id = word_id).first()
 
     if not word:
-        return {'message': 'Word not found'}, 404
+        return {'message': 'word not found'}, 404
     
     db.session.delete(word)
     db.session.commit()
 
-    return {'message': 'Word deleted successfully'}
+    return {'message': 'word deleted successfully'}

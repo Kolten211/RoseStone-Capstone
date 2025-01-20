@@ -11,6 +11,8 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
+    native_language = db.Column(db.String(25))
+    learning_language = db.Column(db.String(25))
     level = db.Column(db.String(25))
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
@@ -30,5 +32,9 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'natative_language': self.native_language,
+            'learning_language': self.learning_language,
+            "level": self.level,
+            'email': self.email,
+            'hashed_password': self.hashed_password
         }

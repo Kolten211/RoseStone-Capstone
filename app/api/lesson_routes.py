@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models.db import db
-from app.models import Lesson, Word, Phrase
+from app.models import Lesson, Word, Phrase, LearnedWord, LearnedPhrase
 
 lesson_routes =  Blueprint('lesson', __name__)
 
@@ -50,7 +50,7 @@ def create_lesson():
     
     return new_lesson.to_dict(), 201
 
-@lesson_routes.route('/<int:lesson_id>')
+@lesson_routes.route('/<int:lesson_id>', methods=['PUT'])
 @login_required
 def update_lesson(lesson_id):
     """
@@ -86,3 +86,36 @@ def delete_lesson(lesson_id):
     db.session.commit()
 
     return {'message': 'Lesson deleted successfully'}
+
+
+
+@lesson_routes.route('/<int:lesson_id>/complete', methods=['POST'])
+@login_required
+def lesson_complete(lesson_id):
+    """
+    To add words or phrases when a user completes a lesson 
+    """
+
+    lesson = Lesson.query.get(lesson_id)
+
+
+    if not lesson:
+        return {'message': "No lesson found"}
+    
+    if lesson.level == 'beginner':
+        lesson_words = lesson.words
+        for word in lesson_words:
+            learned_word = LearnedWord(user_id=current_user.id, word_id=word.id)
+            db.session.add(learned_word)
+
+    elif lesson.level == 'intermediate':
+        lesson_phrase = lesson.phrases
+        for phrase in lesson_phrase:
+            learned_phrase = LearnedPhrase(user_id=current_user.id, phrase_id=phrase.id)
+            db.session.add(learned_phrase)
+    
+    elif lesson.levl == 'Advanced':
+        pass
+
+    db.session.commit()
+    return {'message': 'Lesson Completed!'}

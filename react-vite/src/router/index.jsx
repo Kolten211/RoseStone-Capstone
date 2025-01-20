@@ -2,14 +2,16 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
-
+import PrivateRoute from '../components/PrivateRouteComponent/PrivateRoute';
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <PrivateRoute>
+                  <h1>Te damos la bienvenida a RoseStone</h1>
+                </PrivateRoute>
       },
       {
         path: "login",

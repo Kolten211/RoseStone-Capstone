@@ -33,7 +33,7 @@ function LoginFormPage() {
 
   return (
     <>
-      <h1>Log In</h1>
+      <h1>Iniciar sesión</h1>
       {errors.length > 0 &&
         errors.map((message) => <p key={message}>{message}</p>)}
       <form onSubmit={handleSubmit}>
@@ -48,7 +48,7 @@ function LoginFormPage() {
         </label>
         {errors.email && <p>{errors.email}</p>}
         <label>
-          Password
+          Contraseña
           <input
             type="password"
             value={password}
@@ -57,7 +57,7 @@ function LoginFormPage() {
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        <button type="submit">Entrar</button>
       </form>
     </>
   );

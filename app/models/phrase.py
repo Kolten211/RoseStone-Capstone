@@ -10,13 +10,12 @@ class Phrase(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     phrase = db.Column(db.String(50), nullable = False) ##, unique = True
     translation = db.Column(db.String(50))
-    learned = db.Column(db.Boolean, default=False)
+   
     lessons = relationship('Lesson', secondary='lessons_phrases', backref=db.backref('Sentences', lazy=True))
 
     def to_dict(self):
         return {
             'id': self.id,
-            'phrase': self.word,
+            'phrase': self.phrase,
             'translation': self.translation,
-            'learned': self.learned
         }
