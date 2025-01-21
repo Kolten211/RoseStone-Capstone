@@ -15,7 +15,7 @@ def lessons():
 
     lessons = Lesson.query.all()
 
-    return {"lessons": [lesson.to_dict for lesson in lessons]}
+    return {"lessons": [lesson.to_dict() for lesson in lessons]}
 
 @lesson_routes.route('/<int:lesson_id>')
 @login_required

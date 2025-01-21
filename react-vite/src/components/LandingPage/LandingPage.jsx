@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchLessons } from "../../redux/lesson";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,12 +13,6 @@ const LandingPage = () => {
     
     return (
         <div>
-            <div>
-                <h1>Hola amigos, ¡espero que estén bien!</h1>
-            </div>
-            <div>
-                <h2>Aquí puedes ver la lista de todas las lecciones.</h2>
-            </div>
             <div>
                 <ul>
                     {lessons.map((lesson) => (

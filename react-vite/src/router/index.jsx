@@ -4,16 +4,20 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import PrivateRoute from '../components/PrivateRouteComponent/PrivateRoute';
 import LandingPage from '../components/LandingPage';
+import Greeting from '../components/Greeting/GreetingPage';
+
+
+
+
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
         path: "/",
-        element: 
-        <PrivateRoute>
-          <h1>Te damos la bienvenida a RoseStone</h1>
-        </PrivateRoute>
+        element: <PrivateRoute>
+                  <Greeting />
+                </PrivateRoute>
       },
       {
         path: '/landing-page',
