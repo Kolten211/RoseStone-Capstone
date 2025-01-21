@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const initialState = []
 
 export const LOAD_LESSONS = "LOAD_LESSONS";
+export const LOAD_LESSON_DETAILS = "LOAD_LESSON_DETAILS";
 export const ADD_LESSON = "ADD_LESSON";
 export const UPDATE_LESSON = "UPDATE_LESSON";
 export const DELETE_LESSON = "DELETE_LESSON";
@@ -12,6 +13,10 @@ export const loadLessons = (lessons) => ({
     type: LOAD_LESSONS,
     lessons
 });
+export const loadLessonDetails = (lesson) => ({
+    type: LOAD_LESSON_DETAILS,
+    lesson
+})
 
 export const addLesson = (lesson) => ({
     type: ADD_LESSON,
@@ -38,6 +43,18 @@ export const fetchLessons = () => async (dispatch) => {
 
     if (response.ok) {
         dispatch(loadLessons(response))
+    } else {
+        throw new Error('Failed to complete task');
+    }
+}
+
+export const fetchLessonDetails = (lesson_id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/lessons/${lesson_id}`);
+    if (response.ok) {
+        const lesson = await response.json();
+        dispatch(loadLessonDetails(lesson))
+    } else {
+        throw new Error('Failed to complete task');
     }
 }
 
@@ -56,6 +73,8 @@ export const createLesson = (lessonData) => async (dispatch) => {
         dispatch(addLesson(newLesson));
 
         return newLesson
+    } else {
+        throw new Error('Failed to complete task');
     }
 }
 
@@ -73,6 +92,8 @@ export const editLesson = (lessonData) => async (dispatch) => {
         dispatch(updateLesson(newData));
 
         return newData
+    } else {
+        throw new Error('Failed to complete task');
     }
 };
 
@@ -82,6 +103,8 @@ export const removeLesson = (lesson_id) => async (dispatch) => {
     });
     if (response.ok) {
         dispatch(deleteLesson(lesson_id))
+    } else {
+        throw new Error('Failed to complete task');
     }
 };
 
@@ -96,6 +119,8 @@ export const finishedLesson = (lessonData) => async (dispatch) => {
 
     if (response.ok) {
         dispatch(completeLesson(lessonData))
+    } else {
+        throw new Error('Failed to complete task');
     }
 };
 
@@ -104,12 +129,14 @@ const lessonReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LESSONS:
             return [...action.lessons];
+        case LOAD_LESSON_DETAILS:
+            return [...state.filter(lesson => lesson.id !== action.lesson.id), action.lesson]
         case ADD_LESSON:
             return [...state, action.lesson];
         case UPDATE_LESSON:
             return state.map((lesson) => lesson.id === action.lesson_id ? action.leson : lesson)
         case DELETE_LESSON:
-            return state.map((lesson) => lesson.id !== action.lesson_id)
+            return state.filter(lesson => lesson.id !== action.lesson)
         case COMPLETE_LESSON:
             return state
         default:

@@ -6,7 +6,6 @@ from app.routes.aws_helpers import ALLOWED_EXTENSIONS
 
 class WordForm(FlaskForm):
     word = StringField("Word", validators=[DataRequired()])
-    definition = StringField("Definition", validators=[DataRequired()])
     source_language = StringField("Source language")
     target_language = StringField("Target Language")
     image = FileField("Image", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])

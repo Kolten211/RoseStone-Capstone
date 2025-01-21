@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models.db import db
-from app.models import Lesson, Word, Phrase, LearnedWord, LearnedPhrase
+from app.models import Lesson, Word, Phrase, LearnedWord, LearnedPhrase, User
 
 lesson_routes =  Blueprint('lesson', __name__)
 
@@ -16,6 +16,30 @@ def lessons():
     lessons = Lesson.query.all()
 
     return {"lessons": [lesson.to_dict for lesson in lessons]}
+
+@lesson_routes.route('/<int:lesson_id>')
+@login_required
+def lesson_details(lesson_id):
+    """
+    To get a specific lesson
+    """
+
+    lesson = Lesson.query.get(lesson_id)
+
+    if not lesson:
+        return {'message': 'Lesson not found'}, 404
+    
+    words = lesson.words.all()
+    phrases = lesson.phrases.all()
+
+    return {
+        'title': lesson.title,
+        'difficulty': lesson.difficulty,
+        'user_id': lesson.user_id,
+        'description': lesson.description,
+        'words': [word.to_dict() for word in words],
+        'phrases': [phrase.to_dict() for phrase in phrases]
+        }
 
 @lesson_routes.route('/create', methods=['POST'])
 @login_required
