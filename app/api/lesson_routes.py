@@ -29,8 +29,8 @@ def lesson_details(lesson_id):
     if not lesson:
         return {'message': 'Lesson not found'}, 404
     
-    words = lesson.words.all()
-    phrases = lesson.phrases.all()
+    words = lesson.words
+    phrases = lesson.phrases
 
     return {
         'title': lesson.title,
@@ -57,7 +57,10 @@ def create_lesson():
 
     phrase_ids = lesson_data.get('phrase_ids', [])
 
+    questions = lesson_data.get('questions', [])
+
     new_lesson = Lesson(**lesson_data)
+    new_lesson.questions = questions
 
     for word_id  in word_ids:
         word = Word.query.get(word_id)

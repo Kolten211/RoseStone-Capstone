@@ -1,5 +1,8 @@
+import os
+import uuid
 from flask import Blueprint, request
 from flask_login import login_required, current_user
+from .aws_helper import upload_file_to_s3, remove_file_from_s3
 from app.models.db import db
 from app.models import Word, LearnedWord
 
@@ -28,16 +31,14 @@ def create_word():
     if not word_data:
         return {"message": "Invalid request body"}, 400
     
-    existing_word = Word.query.filter_by(word=word_data).first()
-
-    if existing_word:
-        return {"message": "Word already exists"}, 409
-    
     new_word = Word(**word_data)
-    # db.session.add(new_word)
-    # db.session.commit()
+    db.session.add(new_word)
+    db.session.commit()
 
-    new_learned_word = LearnedWord(user_id=current_user.id, word_id=new_word)
+    new_learned_word = LearnedWord(
+        user_id=current_user.id,
+        word_id=new_word.id
+    )
     db.session.add(new_learned_word)
     db.session.commit()
     
@@ -50,16 +51,31 @@ def update_word(word_id):
     User update spelling to word to make more sense to them
     """
 
-    data = request.json
+    # data = request.json
     word = LearnedWord.query.filter_by(user_id = current_user.id, word_id = word_id).first()
 
 
     if not word:
         return {'message': 'Word not found'}, 404
     
-    if 'word' in data:
-        word.word = data['word']
-    
+    if 'word' in request.form:
+        word.user_word = request.form['word']
+    if 'translation' in request.form:
+        word.translation = request.form['translation']
+    if 'part_of_speech' in request.form:
+        word.part_of__speech = request.form['part_of_speech']
+    if 'audio' in request.files:
+        audio_file = request.files['audio']
+
+        filename = f"word_{word_id}_{uuid.uuid4.hex}.wav"
+        audio_file.filename = filename
+
+        upload_result = upload_file_to_s3(audio_file)
+
+        if "url" not in upload_result:
+            return { "errors": upload_result["errors"]}
+
+        word.audio_url = upload_result['url']
     db.session.commit()
 
     return word.to_dict()
@@ -80,3 +96,16 @@ def delete_word(word_id):
     db.session.commit()
 
     return {'message': 'word deleted successfully'}
+
+
+@word_routes.route('/learned')
+@login_required
+def learned_words():
+    """
+    Get all Learned Words of a user
+    """
+
+    learned_words = LearnedWord.query.filter_by(user_id=current_user.id).all()
+    learned_words_dicts = [lw.word.to_dict() for lw in  learned_words if lw.word]
+
+    return {'learned_words': learned_words_dicts}

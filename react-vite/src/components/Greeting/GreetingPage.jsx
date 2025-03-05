@@ -1,5 +1,5 @@
-
-
+import { NavLink } from "react-router-dom"
+import "./GreetingPage.css"
 function Greeting() {
     return (
         <>
@@ -9,6 +9,7 @@ function Greeting() {
             <h1>Te damos la bienvenida a RoseStone</h1>
             <div>
                 <h2>Aquí puedes ver la lista de todas las lecciones.</h2>
+                <NavLink to='/landing-page' className='nav-link'>Click Me!</NavLink>
             </div>
         </>
     )

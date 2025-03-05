@@ -8,6 +8,7 @@ export const ADD_LESSON = "ADD_LESSON";
 export const UPDATE_LESSON = "UPDATE_LESSON";
 export const DELETE_LESSON = "DELETE_LESSON";
 export const COMPLETE_LESSON = "COMPLETE_LESSON";
+export const CLEAR_LESSON_DETAILS = 'CLEAR_LESSON_DETAILS'
 
 export const loadLessons = (lessons) => ({
     type: LOAD_LESSONS,
@@ -17,6 +18,10 @@ export const loadLessonDetails = (lesson) => ({
     type: LOAD_LESSON_DETAILS,
     lesson
 })
+
+export const clearLessonDetails = () => ({
+    type: CLEAR_LESSON_DETAILS
+});
 
 export const addLesson = (lesson) => ({
     type: ADD_LESSON,
@@ -42,8 +47,12 @@ export const fetchLessons = () => async (dispatch) => {
     const response = await csrfFetch('/api/lessons/');
 
     if (response.ok) {
-        dispatch(loadLessons(response))
+        const lessons = await response.json();
+        dispatch(loadLessons(lessons))
+        return lessons
     } else {
+        const errorData = await response.json()
+        console.error("ERROR", errorData )
         throw new Error('Failed to complete task');
     }
 }
@@ -52,7 +61,7 @@ export const fetchLessonDetails = (lesson_id) => async (dispatch) => {
     const response = await csrfFetch(`/api/lessons/${lesson_id}`);
     if (response.ok) {
         const lesson = await response.json();
-        dispatch(loadLessonDetails(lesson))
+        dispatch(loadLessonDetails(lesson)) 
     } else {
         throw new Error('Failed to complete task');
     }
@@ -128,13 +137,16 @@ export const finishedLesson = (lessonData) => async (dispatch) => {
 const lessonReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_LESSONS:
-            return [...action.lessons];
+            return [...action.lessons.lessons];
         case LOAD_LESSON_DETAILS:
+            console.log("ACTION", action)
             return [...state.filter(lesson => lesson.id !== action.lesson.id), action.lesson]
+        case CLEAR_LESSON_DETAILS:
+            return initialState
         case ADD_LESSON:
             return [...state, action.lesson];
         case UPDATE_LESSON:
-            return state.map((lesson) => lesson.id === action.lesson_id ? action.leson : lesson)
+            return state.map((lesson) => lesson.id === action.lesson_id ? action.lesson : lesson)
         case DELETE_LESSON:
             return state.filter(lesson => lesson.id !== action.lesson)
         case COMPLETE_LESSON:

@@ -6,9 +6,15 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
+import lessonReducer from "./lesson";
+import wordReducer from "./word";
+import phraseReducer from "./phrase"
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  lesson: lessonReducer,
+  word: wordReducer,
+  phrse: phraseReducer
 });
 
 let enhancer;

@@ -1,3 +1,205 @@
 .profile-dropdown {
   position: absolute;
+  right: 30px;
+  margin: 0px;
+  padding: 0px;
+  top: 80px;
+  border: solid gray; 
+  border-radius: 8px;
+  background-color: rgb(65, 51, 51);
+  width: 200px;
+  z-index: 9999;
+}
+
+.profile-dropdown li {
+  padding: 10px 8px;
+  /* border-bottom: solid lightgray; */
+}
+
+.modal-item, .profile-menu-button {
+  cursor: pointer;
+}
+
+
+.profile-dropdown li#item {
+  /* padding: 10px 8px; */
+  border-bottom: solid lightgray;
+}
+
+.login {
+  border-bottom: 0;
+}
+
+.profile-dropdown li#user-info {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.icon {
+  text-decoration: none;
+}
+
+.profile-dropdown button {
+  /* border: solid red; */
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #b80808; /* Sage green */
+  color: rgb(252, 252, 252);
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.profile-dropdown button:hover {
+  background-color: #e62f02; /* Darker sage green */
+}
+
+
+.nav-contents {
+  /* border: dotted red; */
+  display: flex;
+  justify-content: space-between;
+  margin: none;
+  max-width: 100%;
+  padding: 0px 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.home {
+  border: solid gray;
+  padding: 10px;
+  
+}
+.profile-button-create-group {
+  /* border: solid green; */
+  display: flex;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.profile-menu-button {
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+  border: gray 1px;
+  height: 32px;
+  width: 70px;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.profile-menu-button:hover {
+  cursor: pointer;
+}
+
+.sage-icon {
+  color: #557b5d;
+}
+
+.create-group-button {
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  /* padding: 8px 5px; */
+}
+
+.create-group-button:hover {
+  cursor: pointer;
+  background-color: #f0f5f2;
+}
+
+.sage-icon-container {
+  display: flex;
+  align-items: center;
+  column-gap: 24px;
+  font-size: 16px;
+}
+
+
+/* ul {
+  list-style: none;
+  margin: 20px;
+  padding: 50px;
+  display: flex; 
+  justify-content: space-between; 
+  max-width: 100%;
+  align-items: center;
+} */
+
+.icon-label {
+  /* border: solid red; */
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.user-icon, .menu-icon {
+  font-size: 24px;
+}
+
+.nav {
+  border-bottom: lightgray 1px solid;
+}
+
+.dropdown-li a {
+  /* border: solid red; */
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.options{
+  display: flex;
+  gap: 5px
+}
+.options-menu{
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  align-items: stretch;
+}
+.learned-words {
+  text-decoration: none;
+  color: #000;
+  border-bottom: solid 2px;
+}
+
+.learned-words:hover {
+  background-color: seagreen ;
+  cursor: pointer;
+}
+
+.create-word {
+  text-decoration: none;
+  color: #000;
+  border-bottom: solid 2px;
+}
+
+.create-word:hover {
+  background-color: burlywood;
+  cursor: pointer;
+}
+
+.lessons {
+  text-decoration: none;
+  color: #000;
+  border-bottom: solid 2px;
+}
+
+.lessons:hover {
+  cursor: pointer;
+  background-color: crimson;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid #000;
+  border-top: 2px solid #000;
+  gap: 5px
 }

@@ -6,7 +6,7 @@ const GET_WORDS = "GET_WORDS"
 const CREATE_WORD = "CREATE_WORD"
 const DELETE_WORD = "DELETE_WORD"
 const UPDATE_WORD = "UPDATE_WORD"
-
+const GETLEARNEDWORDS= "GETLEARNEDWORDS"
 
 const getWord = (words) => ({
     type: GET_WORDS,
@@ -29,7 +29,10 @@ const deleteWord = (word_id) => ({
     word_id
 })
 
-
+const get_learned_words = (words) => ({
+    type: GETLEARNEDWORDS,
+    words
+})
 
 export const fetchWords = () => async (dispatch) => {
     const response = await csrfFetch('/api/words/');
@@ -37,6 +40,20 @@ export const fetchWords = () => async (dispatch) => {
     if (response.ok) {
         const words = await response.json();
         dispatch(getWord(words))
+    } else {
+        throw new Error('Failed to find words')
+    }
+}
+
+export const fetchLearnedWords = () => async (dispatch) => {
+    const response = await csrfFetch('/api/words/learned')
+    console.log('Response', response)
+
+    if (response.ok) {
+        const learnedWords = await response.json();
+        console.log("what is happening", learnedWords)
+        dispatch(get_learned_words(learnedWords))
+        return learnedWords
     } else {
         throw new Error('Failed to find words')
     }
@@ -59,13 +76,15 @@ export const addWord = (wordData) => async (dispatch) => {
     }
 };
 
-export const editWord = (wordData) => async (dispatch) => {
-    const response = csrfFetch(`/api/words/${wordData.id}`, {
+export const editWord = ({id, wordData}) => async (dispatch) => {
+    console.log("What do you have?", wordData)
+    console.log("ID", id)
+    const response = csrfFetch(`/api/words/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: response.stringify(wordData)
+        body: wordData.FormData
     });
 
     if (response.ok) {
@@ -93,6 +112,8 @@ const wordReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_WORDS:
             return [...action.words];
+        case GETLEARNEDWORDS:
+            return[...state, action.words]
         case CREATE_WORD:
             return [...state, action.word];
         case UPDATE_WORD:

@@ -5,6 +5,12 @@ import Layout from './Layout';
 import PrivateRoute from '../components/PrivateRouteComponent/PrivateRoute';
 import LandingPage from '../components/LandingPage';
 import Greeting from '../components/Greeting/GreetingPage';
+import LessonDetails from '../components/LessonDetails/LessonDetails';
+import WordBox from '../components/UsersWordsPhrases/UserContent';
+import CreateWord from '../components/CreateWord/CreateWord';
+import ProfilePage from '../components/ProfilePage/ProfilePage';
+import UpdateWord from '../components/UpdateWord/UpdateWord';
+// import VoiceRecorder from '../components/UpdateWord/Recorder';
 
 
 
@@ -22,6 +28,31 @@ export const router = createBrowserRouter([
       {
         path: '/landing-page',
         element: <LandingPage />
+      },
+      { 
+        path: '/learned-words',
+        element: <WordBox />
+
+      },
+      {
+        path: '/learned/:word_id',
+        element: <UpdateWord />
+      },
+      // {
+      //   path: '/audio-record',
+      //   element: <VoiceRecorder />
+      // },
+      {
+        path: '/create-word',
+        element: <CreateWord />
+      },
+      {
+        path: '/lesson/:lesson_id',
+        element: <LessonDetails />
+      },
+      {
+        path: '/profile-page',
+        element: <ProfilePage />
       },
       {
         path: "login",
