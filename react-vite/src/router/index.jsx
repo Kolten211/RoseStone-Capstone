@@ -13,6 +13,7 @@ import UpdateWord from '../components/UpdateWord/UpdateWord';
 import PhraseBuilder from '../PhraseBuilder/PhraseBuilder';
 import WordDetails from '../components/WordDetails/WordDetails';
 import LearnedPhrases from '../components/PhraseContent/Phrases';
+import PhraseDetails from '../components/PhraseDetails/PhraseDetails';
 // import VoiceRecorder from '../components/UpdateWord/Recorder';
 
 
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
         path:'/learned-phrases',
         element: <LearnedPhrases />
       },
+      {
+        path: '/learned/:phrase_id/details',
+        element: <PhraseDetails />
+      },
       { 
         path: '/learned-words',
         element: <WordBox />
@@ -46,7 +51,7 @@ export const router = createBrowserRouter([
         element: <UpdateWord />
       },
       {
-        path:'/learned/:word_id/details',
+        path:'/learned/:word_id/detail',
         element: <WordDetails />
       },
       {

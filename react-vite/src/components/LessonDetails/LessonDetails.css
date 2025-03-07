@@ -1,0 +1,27 @@
+.details-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.lesson-creator {
+    font-size: x-large;
+}
+
+.lesson-name {
+    font-size: xx-large;
+}
+.foo-present {
+    border: solid 2px;
+    color: ghostwhite;
+    padding: 15px;
+}
+.foo-absent {
+
+}
+.list {
+    color: ghostwhite;
+}
+
+.lesson-h3 {
+    font-size: xx-large;
+}

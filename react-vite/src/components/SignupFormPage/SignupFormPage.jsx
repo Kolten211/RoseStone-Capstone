@@ -10,14 +10,20 @@ function SignupFormPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [level] = useState("Beginner");
+  const [score] = useState(0)
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
-
+  // const validateForm = () => {
+  //   const newErrors = {};
+    
+  //   if (email)
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
@@ -30,18 +36,20 @@ function SignupFormPage() {
         email,
         username,
         password,
+        level,
+        score
       })
     );
 
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      navigate("/");
+      navigate("/profile-page");
     }
   };
 
   return (
-    <>
+    <div className="signup-form">
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
@@ -76,7 +84,7 @@ function SignupFormPage() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <label>
-          Confirm Password
+          Confirma la contraseña
           <input
             type="password"
             value={confirmPassword}
@@ -87,7 +95,7 @@ function SignupFormPage() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

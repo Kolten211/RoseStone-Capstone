@@ -1,0 +1,34 @@
+.phrase-container {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    max-width: 1200px;
+    height: 100%;
+    margin: 20px auto ;
+    gap: 20px;
+}
+.phrase-links{
+    display: block;
+    border: solid 2px;
+    background-color: #79676c;
+    text-decoration: none;
+}
+
+.phrase-links:hover {
+    transform: scale(1.15);
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.phrase-boxes {
+    border-radius: 4px;
+    color: #FAF9F6;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    text-align: center;
+}

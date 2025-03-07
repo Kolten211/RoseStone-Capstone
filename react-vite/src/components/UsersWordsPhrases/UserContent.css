@@ -19,7 +19,8 @@
     border: solid grey 4px;
     border-radius: 10px;
     background-color: rgb(39, 38, 38);
-    padding: 10px;
+    padding-right: 100px;
+    padding-left: 100px;
     justify-content: center;
 }
 .important {

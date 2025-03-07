@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   lesson: lessonReducer,
   word: wordReducer,
-  phrse: phraseReducer
+  phrase: phraseReducer
 });
 
 let enhancer;

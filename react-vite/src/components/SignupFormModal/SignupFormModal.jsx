@@ -9,7 +9,9 @@ function SignupFormModal() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [level, setLevel] = useState("Beginner");
+  const [score, setscore] = useState(0);
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
@@ -23,11 +25,17 @@ function SignupFormModal() {
       });
     }
 
+    const levels = "Beginner";
+    const scores = 0;
+    setLevel(levels)
+    setscore(scores)
     const serverResponse = await dispatch(
       thunkSignup({
         email,
         username,
         password,
+        level,
+        score
       })
     );
 
@@ -39,7 +47,7 @@ function SignupFormModal() {
   };
 
   return (
-    <>
+    <div className="signup-form">
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
@@ -85,7 +93,7 @@ function SignupFormModal() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

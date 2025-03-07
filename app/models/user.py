@@ -14,8 +14,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     native_language = db.Column(db.String(25))
     learning_language = db.Column(db.String(25))
-    level = db.Column(db.String(25))
-    score = db.Column(db.Integer)
+    level = db.Column(db.String(25), default="Beginner")
+    score = db.Column(db.Integer, default=0)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 

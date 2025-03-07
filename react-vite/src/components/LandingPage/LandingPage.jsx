@@ -44,14 +44,12 @@ const LandingPage = () => {
             <p>Loading.....</p>
         ) : (
             <div className="lessons-container">
-                <h1>Lessons</h1>
-                <ul className="lesson-items">
+                <h1 className="title">Lessons</h1>
+                <div className="lesson-items">
                     {filterdLessons.map(lesson => (
-                        <li key={lesson.id}>
-                            <NavLink to={`/lesson/${lesson.id}`}>{lesson.title}</NavLink>
-                        </li>
+                        <NavLink key={lesson.id} to={`/lesson/${lesson.id}`} className="lesson-links">{lesson.title}</NavLink>
                     ))}
-                </ul>
+                </div>
             </div>
         ) }
             <p>Estos cambiarán junto con los objetivos a medida que subas de nivel!</p>

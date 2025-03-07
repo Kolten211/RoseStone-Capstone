@@ -4,10 +4,15 @@
     justify-content: center;
     align-items: center;
 }
-.lessons-container a{
-
+.lessons-container {
+    border-bottom: 2px ghostwhite;
 }
-
-.lessons-items a{
-    border: solid 5px
+.lesson-items {
+    display: flex;
+    gap: 20px;
+    
+}
+.lesson-links {
+    display: flex;
+    border: 2px ghostwhite;
 }

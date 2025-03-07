@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearLessonDetails, fetchLessonDetails, finishedLesson } from '../../redux/lesson';
-
+import './LessonDetails.css'
 
 function LessonDetails() {
     const { lesson_id } = useParams();
     const dispatch = useDispatch();
-    const [userlesson, setlesson] = useState(null)
+    // const [userlesson, setlesson] = useState(null)
     const [showTest, setShowTest] = useState(false)
-    const [ userAnswers, setUserAnswers ] = useState({})
+    // const [ userAnswers, setUserAnswers ] = useState({})
 
     useEffect(() => {
         dispatch(clearLessonDetails())
@@ -35,47 +35,49 @@ function LessonDetails() {
 
     console.log("Am i understanding you", lesson)
 
-    const handleSubmit = () => {
-        dispatch(finishedLesson())
+    // const handleSubmit = () => {
+    //     dispatch(finishedLesson())
 
        
-    }
+    // }
 
     return (
-        <>
+        <div className='details-container'>
             <div>
-                <h2>{lessonDetails?.title}</h2>
+                <h2 className='lesson-title'>{lessonDetails?.title}</h2>
             </div>
             <div>
-                <p>Creado por: {lessonDetails?.user_id}</p>
-                <p>La dificultad: {lessonDetails?.difficulty}</p>
-                <p>La descripción: {lessonDetails?.description}</p>
+                <p className='lesson-creator'>Creado por: {lessonDetails?.user_id}</p>
+                <p className='lesson-creator'>La dificultad: {lessonDetails?.difficulty}</p>
+                <p className='lesson-creator'>La descripción: {lessonDetails?.description}</p>
             </div>
-            <div>
-                <h3>La palabra</h3>
+            <div >
+                <h3 className='lesson-name'>La palabra</h3>
             </div>
-            <ul>
-                {lessonDetails?.words?.map((word) => (
-                    <li key={word.id}>{word.word}</li>
-                ))}
-            </ul>
-            <h3>La frase</h3>
-            <ul>
-                {lessonDetails?.phrases?.map((phrase) => (
-                    <li key={phrase.id}>{phrase.phrase}</li>
-                ))}
-            </ul>
+            <div className={lessonDetails?.words ? "foo-present" : "foo-absent"}>
+                <div>
+                    {lessonDetails?.words?.map((word) => (
+                        <h4 key={word.id}>{word.word}</h4>
+                    ))}
+                </div>
+            </div>
+            <h3 className='lesson-h3'>La frase</h3>
+            <div className={lessonDetails?.phrases.length > 0 ? "foo-present" : "foo-absent"}>
+                <div className='list'>
+                    {lessonDetails?.phrases?.map((phrase) => (
+                        <h4 key={phrase.id} >{phrase.phrase}</h4>
+                    ))}
+                </div>
+            </div>
             <button onClick={handleStart}>Iniciar prueba</button>
 
             {showTest && (
                 <div>
-                    <h2>Test</h2>
-                    <ul>
-                        {}
-                    </ul>
+                    <h2 className='lesson-title'>Test</h2>
+                    <h3 className='lesson-h3'>Feature coming soon / Función próximamente </h3>
                 </div>
             )}
-        </>
+        </div>
     )
 }
 

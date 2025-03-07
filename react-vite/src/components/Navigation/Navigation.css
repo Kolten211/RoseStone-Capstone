@@ -46,9 +46,10 @@
   font-size: 25px;
   color: white;
   border: 3mm ridge rgba(163, 70, 79, 0.651);
-  width: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
+  border-radius: 10px;
+  font-size: xx-large;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .icon {

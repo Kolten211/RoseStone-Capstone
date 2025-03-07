@@ -12,8 +12,8 @@ function WordTile({ learned_word }) {
 
     return (
         <div>
-        <NavLink to={`/learned/${learned_word.id}/details`} state={{learned_word}} className="word-link">
-            <div  className="word-boxes" >{learned_word.word}</div> 
+        <NavLink to={`/learned/${learned_word.id}/detail`} state={{learned_word}} className="word-link">
+            <div  className="word-boxes">{learned_word.word}</div> 
         </NavLink>
         <OpenModalButton
         buttonText='Delete'
@@ -37,13 +37,14 @@ function WordBox() {
     const learned = useSelector(state => state.word)
     console.log('What are you?', learned)
     const learned_word = learned[0]
-    console.log('What are you? 2 ', learned_word)
+    console.log('What are you? 2', learned_word)
     const learned_array = learned_word?.learned_words
     console.log('What are you? 3 ', learned_array)
     return (
         <>
-            <div className="title-info">
-                <h1 className="title">Palabras aprendidas</h1>
+            <div className="title-info">   
+                <h1 className="title">Palabras aprendidas</h1>  
+            
                 <h3 className="important">Asegúrate de pronunciar las palabras que has aprendido tanto como te sea posible.</h3>
                 <h4>Aprende la palabra</h4>
                 <a href="https://www.ingles.com/" target="_blank"  rel="noreferrer" className="link"> Ingles.com</a>
