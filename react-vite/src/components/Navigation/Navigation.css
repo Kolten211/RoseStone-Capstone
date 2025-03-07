@@ -35,6 +35,22 @@
   padding-bottom: 0;
 }
 
+.logo {
+  width: 50px;
+  margin-right: 5px;
+}
+
+.the-title {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  color: white;
+  border: 3mm ridge rgba(163, 70, 79, 0.651);
+  width: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .icon {
   text-decoration: none;
 }
@@ -69,10 +85,15 @@
   display: flex;
   align-items: center;
 }
-.home {
+/* .home {
   border: solid gray;
   padding: 10px;
+  transition: transform 0.2s;
+  background-color: #5d4c4b;
   
+} */
+.home:hover {
+  transform: scale(1.35);
 }
 .profile-button-create-group {
   /* border: solid green; */
@@ -144,6 +165,8 @@
 
 .nav {
   border-bottom: lightgray 1px solid;
+  padding: 10px;
+  margin: 15px
 }
 
 .dropdown-li a {

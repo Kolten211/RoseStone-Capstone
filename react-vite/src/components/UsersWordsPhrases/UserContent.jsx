@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { fetchLearnedWords } from "../../redux/word";
+import { clearWordDetails, fetchLearnedWords } from "../../redux/word";
+import OpenModalButton from "../OpenModalButton";
 import "./UserContent.css"
 import { NavLink } from "react-router-dom";
+import DeleteWords from "../DeleteWord/DeleteWord";
 
 function WordTile({ learned_word }) {
     console.log(learned_word)
 
 
     return (
-        <NavLink to={`/learned/${learned_word.id}`} state={{learned_word}} className="word-link">
+        <div>
+        <NavLink to={`/learned/${learned_word.id}/details`} state={{learned_word}} className="word-link">
             <div  className="word-boxes" >{learned_word.word}</div> 
         </NavLink>
+        <OpenModalButton
+        buttonText='Delete'
+        modalComponent={<DeleteWords word={learned_word}/>}
+        />
+        </div>
     )
 
 }
@@ -20,6 +28,7 @@ function WordBox() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        dispatch(clearWordDetails())
         dispatch(fetchLearnedWords())
         .then(() => setLoading(false))
         .catch(() => setLoading(false))
@@ -33,21 +42,23 @@ function WordBox() {
     console.log('What are you? 3 ', learned_array)
     return (
         <>
-        <h1>Palabras aprendidas</h1>
-        <h3>Asegúrate de pronunciar las palabras que has aprendido tanto como te sea posible.</h3>
-        <h4>Aprende la palabra</h4>
-        <a href="https://www.ingles.com/" target="_blank"> Ingles.com</a>
-        <div className=".word-container">
-            { loading ? (
-                <>Loading...</>
-            ) : learned && learned[0]?.learned_words ? (
-             <div className="word-boxes">{ learned[0].learned_words?.map(lw => (
-                <WordTile key={lw.id}
-                learned_word={lw} />
-            ))}</div> ) : (
-                <div>No palabras</div>
-            ) }
-        </div>
+            <div className="title-info">
+                <h1 className="title">Palabras aprendidas</h1>
+                <h3 className="important">Asegúrate de pronunciar las palabras que has aprendido tanto como te sea posible.</h3>
+                <h4>Aprende la palabra</h4>
+                <a href="https://www.ingles.com/" target="_blank"  rel="noreferrer" className="link"> Ingles.com</a>
+            </div>
+            <div className="word-container">
+                { loading ? (
+                    <>Loading...</>
+                ) : learned && learned[0]?.learned_words ? (
+                learned[0].learned_words?.map(lw => (
+                    <WordTile key={lw.id}
+                    learned_word={lw} />
+                )) ) : (
+                    <div>No palabras</div>
+                ) }
+            </div>
         </>
     )
 }

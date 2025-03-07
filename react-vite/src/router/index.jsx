@@ -10,6 +10,9 @@ import WordBox from '../components/UsersWordsPhrases/UserContent';
 import CreateWord from '../components/CreateWord/CreateWord';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
 import UpdateWord from '../components/UpdateWord/UpdateWord';
+import PhraseBuilder from '../PhraseBuilder/PhraseBuilder';
+import WordDetails from '../components/WordDetails/WordDetails';
+import LearnedPhrases from '../components/PhraseContent/Phrases';
 // import VoiceRecorder from '../components/UpdateWord/Recorder';
 
 
@@ -29,6 +32,10 @@ export const router = createBrowserRouter([
         path: '/landing-page',
         element: <LandingPage />
       },
+      {
+        path:'/learned-phrases',
+        element: <LearnedPhrases />
+      },
       { 
         path: '/learned-words',
         element: <WordBox />
@@ -37,6 +44,14 @@ export const router = createBrowserRouter([
       {
         path: '/learned/:word_id',
         element: <UpdateWord />
+      },
+      {
+        path:'/learned/:word_id/details',
+        element: <WordDetails />
+      },
+      {
+        path: '/phrase-builder',
+        element: <PhraseBuilder />
       },
       // {
       //   path: '/audio-record',

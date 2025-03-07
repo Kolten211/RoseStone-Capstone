@@ -24,7 +24,7 @@ function UpdateWord() {
             setAudioBlob(learned_word.audio)
             setPartOfSpeech(learned_word.part_of_speech)
             setTranslation(learned_word.translation)
-            // setWord(learned_word.word)
+            setWord(learned_word.word)
         }
     }, []);
 
@@ -58,44 +58,47 @@ function UpdateWord() {
         wordData.append('part_of_speech', part_of_speech);
         wordData.append('word', word)
         console.log('audio added?', wordData )
+        for (let [key, value] of wordData.entries()) {
+            console.log(key, value);
+        }
         await dispatch(editWord({ id: word_id, wordData}));
     }
     return (
         <form onSubmit={handleSubmit}>
-            <h1>Actualizar palabra</h1>
+            <h1 className="title">Actualizar palabra</h1>
             <h3>Puedes añadir una grabación de ti diciendo la palabra</h3>
-            <label>Learned palabra</label><p>{learned_word.word}</p>
+            <label className="word-label">Learned palabra</label><p>{learned_word.word}</p>
             <label className="audio">Audio
                <VoiceRecorder onAudioRecorded={handleAudioRecorded} />
             </label>
             <label>
                 Traducción
                 <input
-                type="text"
-                name="translation"
-                value={translation}
-                onChange={(e) => setTranslation(e.target.value)}
-                placeholder="translation"
+                    type="text"
+                    name="translation"
+                    value={translation}
+                    onChange={(e) => setTranslation(e.target.value)}
+                    placeholder="translation"
                 />
             </label>
             <label>
                 Categorías gramaticales
                 <input
-                type="text"
-                name="part_of_speech"
-                value={part_of_speech}
-                onChange={(e) => setPartOfSpeech(e.target.value)}
-                placeholder="Part of speech"
+                    type="text"
+                    name="part_of_speech"
+                    value={part_of_speech}
+                    onChange={(e) => setPartOfSpeech(e.target.value)}
+                    placeholder="Part of speech"
                 />
             </label>
             <label>
                 Word
                 <input 
-                type="text"
-                name="user_word"
-                value={word}
-                onChange={(e) => setWord(e.target.value)}
-                placeholder="Palabra"
+                    type="text"
+                    name="user_word"
+                    value={word}
+                    onChange={(e) => setWord(e.target.value)}
+                    placeholder="Palabra"
                 />
            </label>
             <button type="submit">Create</button>

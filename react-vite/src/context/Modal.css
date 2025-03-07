@@ -19,6 +19,7 @@
 }
 
 #modal-content {
+  display: flex;
   position: absolute;
-  background-color:white;
+  background-color:rgb(60, 42, 48);
 }

@@ -28,21 +28,24 @@ S3_LOCATION = f"http://{BUCKET_NAME}.s3.amazonaws.com/"
 
 
 def upload_file_to_s3(file, acl="public-read"):
+    print("Did you get called")
     try:
         s3.upload_fileobj(
             file,
             BUCKET_NAME,
-            file.filename,
+            file.name,
             ExtraArgs={
                 "ACL": acl,
                 "ContentType": file.content_type
             }
         )
+        print("FILE", file)
+        print("FileName", file.name)
     except Exception as e:
         # in case the your s3 upload fails
         return {"errors": str(e)}
 
-    return {"url": f"{S3_LOCATION}{file.filename}"}
+    return {"url": f"{S3_LOCATION}{file.name}"}
 
 ##When you call the upload_file_to_s3 helper function from your route, 
 # make sure to print the variable you are storing the return value to, 

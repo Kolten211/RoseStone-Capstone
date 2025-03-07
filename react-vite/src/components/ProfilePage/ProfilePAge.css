@@ -1,0 +1,59 @@
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.username {
+    color: #eae4d2;
+    display: flex;
+    justify-content: center;
+    border-bottom: solid 5px;
+    border-top: solid 5px;
+    width: 100%;
+}
+
+.level {
+    color: #eae4d2;
+    display: flex;
+    justify-content: center;
+    border-bottom: solid 5px;
+    width: 100%;
+}
+
+.score {
+    color: #eae4d2;
+    display: flex;
+    justify-content: center;
+    border-bottom: solid 5px;
+    width: 100%;
+}
+
+label h3{
+    border-top: dotted;
+}
+
+.links {
+    gap: 5px;
+}
+
+.learned-link {
+    border-radius: 10px;
+    border: solid 2px;
+    margin: 20px;
+    border-top: none;
+}
+
+.learned-link:hover{
+    background-color: grey;
+}
+
+.phrase-link {
+    border-radius: 10px;
+    border: solid 2px;
+    margin: 20px;
+    border-top: none;
+}
+.phrase-link:hover{
+    background-color: grey;
+}

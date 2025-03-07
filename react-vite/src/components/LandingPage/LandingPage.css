@@ -1,0 +1,13 @@
+.lessons-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.lessons-container a{
+
+}
+
+.lessons-items a{
+    border: solid 5px
+}

@@ -33,16 +33,16 @@ def create_phrase():
     if not phrase_data:
         return {"message": "Invalid request body"}, 400
     
-    existing_phrase = Phrase.query.filter_by(phrase=phrase_data).first()
+    # existing_phrase = Phrase.query.filter_by(phrase=phrase_data).first()
 
-    if existing_phrase:
-        return {"message": "phrase already exists"}, 409
+    # if existing_phrase:
+    #     return {"message": "phrase already exists"}, 409
     
     new_phrase = Phrase(**phrase_data)
     db.session.add(new_phrase)
     db.session.commit()
 
-    new_learned_phrase = LearnedPhrase(user_id=current_user.id, phrase_id=new_phrase)
+    new_learned_phrase = LearnedPhrase(user_id=current_user.id, phrase_id=new_phrase.id)
     db.session.add(new_learned_phrase)
     db.session.commit()
     
@@ -84,3 +84,11 @@ def delete_phrase(phrase_id):
     db.session.commit()
 
     return {'message': 'Phrase deleted successfully'}
+
+@phrase_routes.route('/learned')
+@login_required
+def get_learned():
+
+    phrases = LearnedPhrase.query.all()
+
+    return {'phrases': [phrase.to_dict() for phrase in phrases]}

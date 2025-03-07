@@ -1,0 +1,57 @@
+.phrase-generator {
+    display: flex;
+    margin: 20px auto;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.word-lists-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for learned and selected words */
+    gap: 20px;
+}
+
+.learned-words-list, .selected-words-list {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.word-item, .selected-word-item {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    margin-bottom: 5px;
+}
+
+.selected-word-boxes{
+    list-style: none;
+    padding: 0;
+}
+
+.selected-word-item{
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+}
+
+.generated-phrase {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.phrase-generator button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.phrase-generator button:hover {
+    background-color: #2980b9;
+}

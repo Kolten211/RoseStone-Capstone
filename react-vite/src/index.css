@@ -1,4 +1,8 @@
 /* TODO: Add sitewide styles */
+@font-face {
+    font-family: "Montserrat";
+    src: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap";
+}
 ul {
     list-style-type: none;
 }
@@ -12,26 +16,38 @@ ul {
 }
 
 p {
-    color: ghostwhite
+    color: #eae4d2
 }
 
 a {
     text-decoration: none;
-    color: ghostwhite;
+    color: #eae4d2;
+    padding: 5px;
 }
 
+
 h1 {
+    color: #eae4d2;
+}
+label {
     color: ghostwhite;
 }
 
 h2 {
-    color: ghostwhite;
+    color: #eae4d2;
 }
 h3 {
-    color: ghostwhite;
+    color: #eae4d2;
+}
+h4 {
+    color: ghostwhite
 }
 html, body {
     height: 100vh;
-    background-color: rgb(65, 60, 60);
+    background-color: rgb(60, 42, 48);
+}
+
+body .modal-background { /* Or your main container selector */
+    background-color: rgb(60, 42, 48) ;
 }
 

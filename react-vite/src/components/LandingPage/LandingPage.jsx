@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchLessons } from "../../redux/lesson";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import './LandingPage.css'
 
 const LandingPage = () => {
     const dispatch = useDispatch();
@@ -31,19 +32,20 @@ const LandingPage = () => {
         } else if (user && user.level === 'Intermediate') {
             return lesson.difficulty === 'Intermediate'
         } else {
-            return false
+            return lessons
         }
     })
 
    
 
     return (
-        <div>
+        <div className="lessons-page">
         { loading ? (
             <p>Loading.....</p>
         ) : (
-            <div>
-                <ul>
+            <div className="lessons-container">
+                <h1>Lessons</h1>
+                <ul className="lesson-items">
                     {filterdLessons.map(lesson => (
                         <li key={lesson.id}>
                             <NavLink to={`/lesson/${lesson.id}`}>{lesson.title}</NavLink>

@@ -2,10 +2,11 @@ import { csrfFetch } from "./csrf";
 
 const initialState = []
 
-const GET_PHRASES = "GET_phraseS"
-const CREATE_PHRASE = "CREATE_phrase"
-const DELETE_PHRASE = "DELETE_phrase"
-const UPDATE_PHRASE = "UPDATE_phrase"
+const GET_PHRASES = "GET_PHRASES"
+const GET_LEARNED_PHRASES = "GET_LEARNED_PHRASES"
+const CREATE_PHRASE = "CREATE_PHRASE"
+const DELETE_PHRASE = "DELETE_PHRASE"
+const UPDATE_PHRASE = "UPDATE_PHRASE"
 
 
 const getPhrase = (phrases) => ({
@@ -13,6 +14,10 @@ const getPhrase = (phrases) => ({
     phrases
 })
 
+const getLearned = (phrases) => ({
+    type: GET_LEARNED_PHRASES,
+    phrases
+})
 const createPhrase = (phrase) => ({
     type: CREATE_PHRASE,
     phrase
@@ -42,8 +47,17 @@ export const fetchPhrases = () => async (dispatch) => {
     }
 }
 
+export const fetchLearnedPhrases = () => async (dispatch) => {
+    const response = await csrfFetch('api/phrases/learned');
+
+    if (response.ok) {
+        const phrases = await response.json();
+        dispatch(getLearned(phrases))
+    }
+}
 export const addPhrase = (phraseData) => async (dispatch) => {
-    const response = csrfFetch('/api/phrases/create', {
+    console.log("Phrase", phraseData)
+    const response = await csrfFetch('/api/phrases/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -60,7 +74,7 @@ export const addPhrase = (phraseData) => async (dispatch) => {
 };
 
 export const editPhrase = (phraseData) => async (dispatch) => {
-    const response = csrfFetch(`/api/phrases/${phraseData.id}`, {
+    const response = await csrfFetch(`/api/phrase/${phraseData.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -78,7 +92,7 @@ export const editPhrase = (phraseData) => async (dispatch) => {
 };
 
 export const removePhrase = (phrase_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/phrases/${phrase_id}`, {
+    const response = await csrfFetch(`/api/phrase/${phrase_id}`, {
         method: 'DELETE'
     })
 
@@ -93,6 +107,9 @@ const phraseReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_PHRASES:
             return [...action.phrases];
+        case GET_LEARNED_PHRASES:
+            console.log(action)
+            return [...state, action.phrases]
         case CREATE_PHRASE:
             return [...state, action.phrase];
         case UPDATE_PHRASE:
