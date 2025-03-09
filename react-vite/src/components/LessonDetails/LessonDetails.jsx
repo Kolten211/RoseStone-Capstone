@@ -54,7 +54,7 @@ function LessonDetails() {
             <div >
                 <h3 className='lesson-name'>La palabra</h3>
             </div>
-            <div className={lessonDetails?.words ? "foo-present" : "foo-absent"}>
+            <div className={lessonDetails?.words?.length > 0 ? "foo-present" : "foo-absent"}>
                 <div>
                     {lessonDetails?.words?.map((word) => (
                         <h4 key={word.id}>{word.word}</h4>
@@ -62,7 +62,7 @@ function LessonDetails() {
                 </div>
             </div>
             <h3 className='lesson-h3'>La frase</h3>
-            <div className={lessonDetails?.phrases.length > 0 ? "foo-present" : "foo-absent"}>
+            <div className={lessonDetails?.phrases?.length > 0 ? "foo-present" : "foo-absent"}>
                 <div className='list'>
                     {lessonDetails?.phrases?.map((phrase) => (
                         <h4 key={phrase.id} >{phrase.phrase}</h4>

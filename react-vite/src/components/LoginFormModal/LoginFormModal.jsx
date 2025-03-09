@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
+import * as sessionActions from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
@@ -27,6 +27,16 @@ function LoginFormModal() {
       closeModal();
     }
   };
+  const demoUser = () => {
+    return dispatch(sessionActions.thunkLogin({email: 'demo@aa.io', password: 'password'}))
+    .then(closeModal)
+    .catch(async (res) => {
+      const data= await res.json();
+      if (data && data.errors) {
+        setErrors(data.errors);
+      }
+    })
+  }
 
   return (
     <>
@@ -53,6 +63,7 @@ function LoginFormModal() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        <button onClick={demoUser}>Demo User</button>
       </form>
     </>
   );

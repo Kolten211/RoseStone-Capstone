@@ -12,7 +12,7 @@ function WordTile({ learned_word }) {
 
     return (
         <div>
-        <NavLink to={`/learned/${learned_word.id}/detail`} state={{learned_word}} className="word-link">
+        <NavLink to={`/learned/${learned_word.id}/detail`} className="word-link">
             <div  className="word-boxes">{learned_word.word}</div> 
         </NavLink>
         <OpenModalButton

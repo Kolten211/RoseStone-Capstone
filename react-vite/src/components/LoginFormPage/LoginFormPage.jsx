@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
+import * as sessionActions from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
@@ -30,6 +30,16 @@ function LoginFormPage() {
       navigate("/");
     }
   };
+  const demoUser = () => {
+    return dispatch(sessionActions.thunkLogin({email: 'demo@aa.io', password: 'password'}))
+    .then(closeModal)
+    .catch(async (res) => {
+      const data= await res.json();
+      if (data && data.errors) {
+        setErrors(data.errors);
+      }
+    })
+  }
 
   return (
     <>
@@ -58,6 +68,7 @@ function LoginFormPage() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Entrar</button>
+        <button onClick={demoUser}>Demo User</button>
       </form>
     </>
   );

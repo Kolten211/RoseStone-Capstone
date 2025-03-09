@@ -1,32 +1,47 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { editWord } from "../../redux/word";
+import { useDispatch, useSelector } from "react-redux"
+import { clearWordDetails, editWord, fetchLWDetails } from "../../redux/word";
 import VoiceRecorder from "./Recorder";
-import { useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 
 
 
 function UpdateWord() {
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
-    const {word_id} = useParams();
-    const location = useLocation();
-    const { learned_word }= location.state
-    console.log("WordData", learned_word)
-
-    const [audioBlob, setAudioBlob] = useState("")
+    const navigate = useNavigate();
+    const { word_id} = useParams();
+    // const location = useLocation();
+    // const { learned_word }= location.state
+    const { closeModal } = useModal();
+    
+    const [loading, setLoading] = useState(true)
+    const [audioBlob, setAudioBlob] = useState(null)
     const [part_of_speech, setPartOfSpeech] = useState("")
     const [translation, setTranslation] = useState("")
     const [word, setWord] = useState("")
 
     useEffect(() => {
+        dispatch(clearWordDetails())
+        dispatch(fetchLWDetails(word_id))
+        .then(() => setLoading(false))
+        .catch(() => setLoading(false))
+    }, []);
+
+    const wordInfo = useSelector((state) => state.word);
+    console.log(wordInfo)
+    const learned_word = wordInfo
+    console.log("WordData", learned_word)
+    useEffect(() => {
         if (learned_word) {
-            setAudioBlob(learned_word.audio)
+            setAudioBlob(learned_word.audio_url)
             setPartOfSpeech(learned_word.part_of_speech)
             setTranslation(learned_word.translation)
             setWord(learned_word.word)
         }
     }, []);
+
+    if(loading) return <>Loading...</>
 
     // const validateForm = () => {
     //     let isValid = true; 
@@ -62,6 +77,8 @@ function UpdateWord() {
             console.log(key, value);
         }
         await dispatch(editWord({ id: word_id, wordData}));
+        navigate(`/profile-page`)
+        closeModal()
     }
     return (
         <form onSubmit={handleSubmit}>

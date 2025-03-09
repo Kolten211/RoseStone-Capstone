@@ -12,8 +12,11 @@ import UpdateWord from "../UpdateWord/UpdateWord";
 function WordDetails(){
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true)
+    // const location = useLocation()
+    // const { learned_word } = location.state
     const { word_id } = useParams();
-
+    
+   
 
     useEffect(() => {
         dispatch(clearWordDetails())
