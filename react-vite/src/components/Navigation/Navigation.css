@@ -189,8 +189,8 @@
 }
 .learned-words {
   text-decoration: none;
-  color: #000;
-  border-bottom: solid 2px;
+  color: ghostwhite;
+  border-bottom: black  2px solid;
 }
 
 .learned-words:hover {
@@ -200,8 +200,8 @@
 
 .create-word {
   text-decoration: none;
-  color: #000;
-  border-bottom: solid 2px;
+  color: ghostwhite;
+  border-bottom: black 2px solid;
 }
 
 .create-word:hover {
@@ -211,8 +211,8 @@
 
 .lessons {
   text-decoration: none;
-  color: #000;
-  border-bottom: solid 2px;
+  color: ghostwhite;
+  border-bottom: black 2px solid;
 }
 
 .lessons:hover {

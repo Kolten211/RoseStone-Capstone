@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from .aws_helper import upload_file_to_s3, remove_file_from_s3
 from app.models.db import db
-from app.models import Word, LearnedWord
+from app.models import Word, LearnedWord, User
 
 word_routes = Blueprint('words', __name__)
 
@@ -152,3 +152,26 @@ def learned_details(word_id):
     else:
         return{'message': 'route not working'}
     
+
+@word_routes.route('/<int:word_id>/correct_spelling', methods=['POST'])
+@login_required
+def correct_spelling(word_id):
+    """
+    Compare the Users word spelling with the correct spelling of the word
+    if the user spells it correctly then the user gets +1 in score 
+    """
+
+    word = Word.query.get(word_id)
+
+    if not word:
+        return {'message': 'Word not found'}
+    
+    data = request.get_json()
+    user_word = data.get('user_word')
+
+    if user_word == word.word:
+        current_user.score +=1
+        db.session.commit()
+        return {'message': 'Score added', 'score': current_user.score}
+    else:
+        return {'message': 'Incorrect Spelling', 'score': current_user.score}

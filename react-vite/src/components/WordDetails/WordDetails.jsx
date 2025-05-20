@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLWDetails, clearWordDetails } from "../../redux/word";
 import { useParams } from "react-router-dom";
-import './WordDetails.css'
-import OpenModalButton from "../OpenModalButton"
+import './WordDetails.css';
+import OpenModalButton from "../OpenModalButton";
 import UpdateWord from "../UpdateWord/UpdateWord";
 
 
@@ -11,7 +11,7 @@ import UpdateWord from "../UpdateWord/UpdateWord";
 
 function WordDetails(){
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     // const location = useLocation()
     // const { learned_word } = location.state
     const { word_id } = useParams();
@@ -29,7 +29,7 @@ function WordDetails(){
     console.log("Do i have a grip on this now", wordInfo)
 
     const lw = wordInfo[0];
-    
+    console.log("LW", lw)
 
     if (!wordInfo) return <>Loading...</>
 

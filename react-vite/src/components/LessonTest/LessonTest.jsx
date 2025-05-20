@@ -2,8 +2,8 @@ import { useState } from "react";
 
 
 
-
-function Quiz( {  question }) {
+//{  question }
+function Quiz( ) {
     const [ score, setScore ] = useState(0);
     const [ showScore, setShowScore ] = useState(false);
     const [ showText, setShowText] = useState(false);
@@ -39,18 +39,18 @@ function Quiz( {  question }) {
                     <>
                     <div>
                         <div>
-                            <span>Pregunta {currentQuestion + 1}</span> / {questions.length}
+                            <span>Pregunta {currentQuestion + 1}</span>  {/* /{questions.length} */}
                         </div>
                         <div>
-                            {questions[currentQuestion].question}
+                            {/* {questions[currentQuestion].question} */}
                         </div>
                     </div>
                     <div>
-                        {questions[currentQuestion + 1].options.map((option) => (
+                        {/* {questions[currentQuestion + 1].options.map((option) => (
                             <button className="asnswer-button" key={option} onClick={handleAnswerOptionClick(option)}>
                                 {option}
                             </button>
-                        ))}
+                        ))} */}
                     </div>
                     </>
                 )}
@@ -59,3 +59,5 @@ function Quiz( {  question }) {
     )
 
 }
+
+export default Quiz

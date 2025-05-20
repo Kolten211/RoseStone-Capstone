@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearLessonDetails, fetchLessonDetails, finishedLesson } from '../../redux/lesson';
+import Quiz from '../LessonTest/LessonTest';
 import './LessonDetails.css'
 
 function LessonDetails() {
@@ -73,8 +74,9 @@ function LessonDetails() {
 
             {showTest && (
                 <div>
-                    <h2 className='lesson-title'>Test</h2>
-                    <h3 className='lesson-h3'>Feature coming soon / Función próximamente </h3>
+                    {/* <h2 className='lesson-title'>Test</h2>
+                    <h3 className='lesson-h3'>Feature coming soon / Función próximamente </h3> */}
+                    <Quiz />
                 </div>
             )}
         </div>

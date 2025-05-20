@@ -1,59 +1,79 @@
-from app.models import db, Lesson, Word, Phrase, environment, SCHEMA
+import json
+from app.models import db, Lesson, Word, Phrase, Question, Answer, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
 def seed_lessons():
 
     words = [
-    Word(word="I", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="me", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="you", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="he", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="she", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="it", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="we", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="they", translation="", part_of_speech="Pronoun", audio_url=""),
-    Word(word="my", translation="", part_of_speech="Possessive Pronoun"),
-    Word(word="your", translation="", part_of_speech="Possessive Pronoun", audio_url=""),
-    Word(word="his", translation="", part_of_speech="Possessive Pronoun", audio_url=""),
-    Word(word="her", translation="", part_of_speech="Possessive Pronoun", audio_url=""),
-    Word(word="its", translation="", part_of_speech="Possessive Pronoun", audio_url=""),
-    Word(word="our", translation="", part_of_speech="Possessive Pronoun", audio_url=""),
-    Word(word="their", translation="", part_of_speech="Possessive Pronoun", audio_url=""),
-    Word(word="big", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="small", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="happy", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="sad", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="good", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="bad", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="hot", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="cold", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="new", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="old", translation="", part_of_speech="Adjective", audio_url=""),
-    Word(word="go", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="come", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="eat", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="drink", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="sleep", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="walk", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="run", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="play", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="work", translation="", part_of_speech="Verb", audio_url=""),
-    Word(word="study", translation="", part_of_speech="Verb", audio_url=""),
+    Word(word="I", translation="Yo", part_of_speech="Pronoun", audio_url=""),
+    Word(word="me", translation="Me", part_of_speech="Pronoun", audio_url=""),
+    Word(word="you", translation="tú", part_of_speech="Pronoun", audio_url=""),
+    Word(word="he", translation="él", part_of_speech="Pronoun", audio_url=""),
+    Word(word="she", translation="ella", part_of_speech="Pronoun", audio_url=""),
+    Word(word="it", translation="lo", part_of_speech="Pronoun", audio_url=""),
+    Word(word="we", translation="nosotros", part_of_speech="Pronoun", audio_url=""),
+    Word(word="they", translation="ellos, ellas", part_of_speech="Pronoun", audio_url=""),
+    Word(word="cat", translation="gato", part_of_speech="Noun", audio_url=""),
+    Word(word="name", translation="nombre", part_of_speech="Noun", audio_url=""),
+    Word(word="coffee", translation="café", part_of_speech="Noun", audio_url=""),
+    Word(word="student", translation="estudiante", part_of_speech="Noun", audio_url=""),
+    Word(word="my", translation="mi", part_of_speech="Possessive Pronoun"),
+    Word(word="your", translation="tu", part_of_speech="Possessive Pronoun", audio_url=""),
+    Word(word="his", translation="su, el suyo", part_of_speech="Possessive Pronoun", audio_url=""),
+    Word(word="her", translation="ella", part_of_speech="Possessive Pronoun", audio_url=""),
+    Word(word="its", translation="su, sus", part_of_speech="Possessive Pronoun", audio_url=""),
+    Word(word="our", translation="nuestro", part_of_speech="Possessive Pronoun", audio_url=""),
+    Word(word="their", translation="su, sus", part_of_speech="Possessive Pronoun", audio_url=""),
+    Word(word="big", translation="grande", part_of_speech="Adjective", audio_url=""),
+    Word(word="small", translation="pequeño", part_of_speech="Adjective", audio_url=""),
+    Word(word="happy", translation="feliz", part_of_speech="Adjective", audio_url=""),
+    Word(word="sad", translation="triste", part_of_speech="Adjective", audio_url=""),
+    Word(word="good", translation="bueno", part_of_speech="Adjective", audio_url=""),
+    Word(word="bad", translation="malo, mal", part_of_speech="Adjective", audio_url=""),
+    Word(word="hot", translation="caliente", part_of_speech="Adjective", audio_url=""),
+    Word(word="cold", translation="frio", part_of_speech="Adjective", audio_url=""),
+    Word(word="new", translation="nuvo", part_of_speech="Adjective", audio_url=""),
+    Word(word="old", translation="viejo", part_of_speech="Adjective", audio_url=""),
+    Word(word="tall", translation="alto", part_of_speech="Adjective", audio_url=""),
+    Word(word="beautiful", translation="hermoso", part_of_speech="Adjective", audio_url=""),
+    Word(word="please", translation="por favor", part_of_speech="Interjection", audio_url=""),
+    Word(word="excuse", translation="disculpar", part_of_speech="Interjection", audio_url=""),
+    Word(word="and", translation="y", part_of_speech="Conjunction", audio_url=""),
+    Word(word="thank", translation="agradecer", part_of_speech="Verb", audio_url=""),
+    Word(word="go", translation="ir", part_of_speech="Verb", audio_url=""),
+    Word(word="come", translation="venir", part_of_speech="Verb", audio_url=""),
+    Word(word="eat", translation="comer", part_of_speech="Verb", audio_url=""),
+    Word(word="drink", translation="beber", part_of_speech="Verb", audio_url=""),
+    Word(word="sleep", translation="dormir", part_of_speech="Verb", audio_url=""),
+    Word(word="walk", translation="caminar", part_of_speech="Verb", audio_url=""),
+    Word(word="run", translation="correr", part_of_speech="Verb", audio_url=""),
+    Word(word="play", translation="jugar", part_of_speech="Verb", audio_url=""),
+    Word(word="work", translation="trabajar, manejar, hacer", part_of_speech="Verb", audio_url=""),
+    Word(word="study", translation="el estudio", part_of_speech="Verb", audio_url=""),
+    Word(word="am", translation="ser", part_of_speech="Verb", audio_url=""),
+    Word(word="do", translation="hacer", part_of_speech="Verb", audio_url=""),
+    Word(word="understand", translation="entender, comprender", part_of_speech="Verb", audio_url=""),
+    Word(word="repeat", translation="repetir", part_of_speech="Verb", audio_url=""),
+    Word(word="not", translation="no", part_of_speech="", audio_url=""),
+    Word(word="can", translation="poder, saber", part_of_speech="Verb", audio_url=""),
+    Word(word="like", translation="gustar", part_of_speech="Verb", audio_url=""),
+    Word(word="live", translation="viver", part_of_speech="Verb", audio_url=""),
+    Word(word="a", translation="un, ", part_of_speech="Article", audio_url=""),
+    Word(word="that", translation="que, eso, ese", part_of_speech="Adverb", audio_url=""),
+    Word(word="what", translation="qué", part_of_speech="Adverb", audio_url=""),
+    Word(word="where", translation="dónde", part_of_speech="Adverb", audio_url=""),
+    Word(word="how", translation="cómo", part_of_speech="Adverb", audio_url=""),
     Word(word="the", translation="", part_of_speech="", audio_url=""),
     Word(word="be", translation="", part_of_speech="", audio_url=""),
-    Word(word="and", translation="", part_of_speech="", audio_url=""),
     Word(word="of", translation="", part_of_speech="", audio_url=""),
-    Word(word="a", translation="", part_of_speech="", audio_url=""),
     Word(word="in", translation="", part_of_speech="", audio_url=""),
     Word(word="to", translation="", part_of_speech="", audio_url=""),
     Word(word="have", translation="", part_of_speech="", audio_url=""),
     Word(word="create", translation="", part_of_speech="", audio_url=""),
-    Word(word="that", translation="", part_of_speech="", audio_url=""),
     Word(word="for", translation="", part_of_speech="", audio_url=""),
     Word(word="with", translation="", part_of_speech="", audio_url=""),
     Word(word="on", translation="", part_of_speech="", audio_url=""),
-    Word(word="repeat", translation="", part_of_speech="", audio_url=""),
     Word(word="say", translation="", part_of_speech="", audio_url=""),
     Word(word="this", translation="", part_of_speech="", audio_url=""),
     Word(word="us", translation="", part_of_speech="", audio_url=""),
@@ -63,14 +83,12 @@ def seed_lessons():
     Word(word="add", translation="", part_of_speech="", audio_url=""),
     Word(word="from", translation="", part_of_speech="", audio_url=""),
     Word(word="favorite", translation="", part_of_speech="", audio_url=""),
-    Word(word="not", translation="", part_of_speech="", audio_url=""),
     Word(word="by", translation="", part_of_speech="", audio_url=""),
     Word(word="mom", translation="", part_of_speech="", audio_url=""),
     Word(word="or", translation="", part_of_speech="", audio_url=""),
     Word(word="grandpa", translation="", part_of_speech="", audio_url=""),
     Word(word="brother", translation="", part_of_speech="", audio_url=""),
     Word(word="dad", translation="", part_of_speech="", audio_url=""),
-    Word(word="can", translation="", part_of_speech="", audio_url=""),
     Word(word="who", translation="", part_of_speech="", audio_url=""),
     Word(word="get", translation="", part_of_speech="", audio_url=""),
     Word(word="if", translation="", part_of_speech="", audio_url=""),
@@ -102,10 +120,7 @@ def seed_lessons():
     Word(word="now", translation="", part_of_speech="", audio_url=""),
     Word(word="could", translation="", part_of_speech="", audio_url=""),
     Word(word="than", translation="", part_of_speech="", audio_url=""),
-    Word(word="what", translation="", part_of_speech="", audio_url=""),
-    Word(word="like", translation="", part_of_speech="", audio_url=""),
     Word(word="other", translation="", part_of_speech="", audio_url=""),
-    Word(word="how", translation="", part_of_speech="", audio_url=""),
     Word(word="then", translation="", part_of_speech="", audio_url=""),
     Word(word="two", translation="", part_of_speech="", audio_url=""),
     Word(word="more", translation="", part_of_speech="", audio_url=""),
@@ -195,7 +210,6 @@ def seed_lessons():
     Word(word="hand", translation="", part_of_speech="", audio_url=""),
     Word(word="talk", translation="", part_of_speech="", audio_url=""),
     Word(word="every", translation="", part_of_speech="", audio_url=""),
-    Word(word="where", translation="", part_of_speech="", audio_url=""),
     Word(word="American", translation="", part_of_speech="", audio_url=""),
     Word(word="show", translation="", part_of_speech="", audio_url=""),
     Word(word="part", translation="", part_of_speech="", audio_url=""),
@@ -212,7 +226,6 @@ def seed_lessons():
     Word(word="color", translation="", part_of_speech="", audio_url=""),
     Word(word="case", translation="", part_of_speech="", audio_url=""),
     Word(word="maid", translation="", part_of_speech="", audio_url=""),
-    Word(word="do", translation="", part_of_speech="", audio_url=""),
     Word(word="question", translation="", part_of_speech="", audio_url=""),
     Word(word="during", translation="", part_of_speech="", audio_url=""),
     Word(word="grocery", translation="", part_of_speech="", audio_url=""),
@@ -299,8 +312,6 @@ def seed_lessons():
     Word(word="sit", translation="", part_of_speech="", audio_url=""),
     Word(word="jump", translation="", part_of_speech="", audio_url=""),
     Word(word="crawl", translation="", part_of_speech="", audio_url=""),
-    Word(word="please", translation="", part_of_speech="", audio_url=""),
-    Word(word="thanks", translation="", part_of_speech="", audio_url=""),
     Word(word="smart", translation="", part_of_speech="", audio_url=""),
     Word(word="brush", translation="", part_of_speech="", audio_url=""),
     Word(word="self", translation="", part_of_speech="", audio_url=""),
@@ -321,14 +332,6 @@ def seed_lessons():
     Word(word="news", translation="", part_of_speech="", audio_url=""),
     Word(word="change", translation="", part_of_speech="", audio_url=""),
     Word(word="include", translation="", part_of_speech="", audio_url=""),
-    Word(word="name", translation="", part_of_speech="", audio_url=""),
-    Word(word="beautiful", translation="", part_of_speech="", audio_url=""),
-    Word(word="coffee", translation="", part_of_speech="", audio_url=""),
-    Word(word="live", translation="", part_of_speech="", audio_url=""),
-    Word(word="Excuse", translation="", part_of_speech="", audio_url=""),
-    Word(word="understand", translation="", part_of_speech="", audio_url=""),
-    Word(word="cat", translation="", part_of_speech="", audio_url=""),
-    Word(word="am", translation="", part_of_speech="", audio_url=""),
     Word(word="dinner", translation="", part_of_speech="", audio_url=""),
     Word(word="buy", translation="", part_of_speech="", audio_url="")
     ]
@@ -355,14 +358,487 @@ def seed_lessons():
     db.session.add_all(phrases)
     db.session.commit()
 
+    lesson1_questions = [
+        Question(
+            question_text='Qué escuchas',
+            audio_file='',
+            word_id=db.session.query(Word).filter_by(word='I').first().id,
+            answers = [
+                Answer(answer_text='eye', is_correct=True),
+                Answer(answer_text='ai', is_correct=True),
+                Answer(answer_text='I', is_correct=True),
+                Answer(answer_text='A', is_correct=False)
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='me').first().id,
+            answers = [
+                Answer(answer_text='mee', is_correct=True),
+                Answer(answer_text='mea', is_correct=True),
+                Answer(answer_text='mii', is_correct=True),
+                Answer(answer_text='me', is_correct=True)
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='you').first().id,
+            answers = [
+                Answer(answer_text='u', is_correct=True),
+                Answer(answer_text='you', is_correct=True),
+                Answer(answer_text='yew', is_correct=True),
+                Answer(answer_text='yu', is_correct=True),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='he').first().id,
+            answers = [
+                Answer(answer_text='he', is_correct=True),
+                Answer(answer_text='hee', is_correct=True),
+                Answer(answer_text='hay', is_correct=True),
+                Answer(answer_text='hard', is_correct=False),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='she').first().id,
+            answers = [
+                Answer(answer_text='shee', is_correct=True),
+                Answer(answer_text='shi', is_correct=True),
+                Answer(answer_text='she', is_correct=True),
+                Answer(answer_text='them', is_correct=False),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='it').first().id,
+            answers = [
+                Answer(answer_text='it', is_correct=True),
+                Answer(answer_text='lip', is_correct=False),
+                Answer(answer_text='et', is_correct=True),
+                Answer(answer_text='cape', is_correct=False),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='we').first().id,
+            answers = [
+                Answer(answer_text='wii', is_correct=True),
+                Answer(answer_text='whee', is_correct=True),
+                Answer(answer_text='we', is_correct=True),
+                Answer(answer_text='hi', is_correct=False),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='they').first().id,
+            answers = [
+                Answer(answer_text='thay', is_correct=True),
+                Answer(answer_text='thae', is_correct=True),
+                Answer(answer_text='theigh', is_correct=True),
+                Answer(answer_text='they', is_correct=True),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='his').first().id,
+            answers = [
+                Answer(answer_text='hiz', is_correct=True),
+                Answer(answer_text='hiss', is_correct=True),
+                Answer(answer_text='hez', is_correct=True),
+                Answer(answer_text='his', is_correct=True),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='her').first().id,
+            answers = [
+                Answer(answer_text='hur', is_correct=True),
+                Answer(answer_text='him', is_correct=False),
+                Answer(answer_text='her', is_correct=True),
+                Answer(answer_text='hurr', is_correct=True),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='its').first().id,
+            answers = [
+                Answer(answer_text='itz', is_correct=True),
+                Answer(answer_text='its', is_correct=True),
+                Answer(answer_text='ritz', is_correct=False),
+                Answer(answer_text='this', is_correct=False),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='our').first().id,
+            answers = [
+                Answer(answer_text='owr', is_correct=True),
+                Answer(answer_text='hour', is_correct=True),
+                Answer(answer_text='our', is_correct=True),
+                Answer(answer_text='ower', is_correct=True),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='their').first().id,
+            answers = [
+                Answer(answer_text='thair', is_correct=True),
+                Answer(answer_text='thayer', is_correct=True),
+                Answer(answer_text='thare', is_correct=True),
+                Answer(answer_text='their', is_correct=True),
+            ]
+        ),  
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='cat').first().id,
+            answers = [
+                Answer(answer_text='kat', is_correct=True),
+                Answer(answer_text='cat', is_correct=True),
+                Answer(answer_text='kate', is_correct=False),
+                Answer(answer_text='cape', is_correct=False),
+            ]
+        ),
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='name').first().id,
+            answers = [
+                Answer(answer_text='name', is_correct=True),
+                Answer(answer_text='naim', is_correct=True),
+                Answer(answer_text='nape', is_correct=False),
+                Answer(answer_text='fame', is_correct=False),
+            ]
+        ), 
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='coffee').first().id,
+            answers = [
+                Answer(answer_text='coughee', is_correct=True),
+                Answer(answer_text='coffe', is_correct=True),
+                Answer(answer_text='cofe', is_correct=True),
+                Answer(answer_text='coffee', is_correct=True),
+            ]
+        ), 
+
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='student').first().id,
+            answers = [
+                Answer(answer_text='student', is_correct=True),
+                Answer(answer_text='coffee', is_correct=False),
+                Answer(answer_text='name', is_correct=False),
+                Answer(answer_text='stewdant', is_correct=True),
+            ]
+        ),   
+    ]
+
+    lesson2_questions = [
+                Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='thank').first().id,
+            answers = [
+                Answer(answer_text='thank', is_correct=True),
+                Answer(answer_text='hank', is_correct=True),
+                Answer(answer_text='shank', is_correct=False),
+                Answer(answer_text='bank', is_correct=False),
+            ]
+        ),
+                Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='go').first().id,
+            answers = [
+                Answer(answer_text='Joe', is_correct=False),
+                Answer(answer_text='throw', is_correct=False),
+                Answer(answer_text='bow', is_correct=False),
+                Answer(answer_text='go', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='come').first().id,
+            answers = [
+                Answer(answer_text='fun', is_correct=False),
+                Answer(answer_text='come', is_correct=True),
+                Answer(answer_text='thumb', is_correct=False),
+                Answer(answer_text='shun', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='eat').first().id,
+            answers = [
+                Answer(answer_text='feet', is_correct=False),
+                Answer(answer_text='sheep', is_correct=False),
+                Answer(answer_text='beep', is_correct=False),
+                Answer(answer_text='eat', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='drink').first().id,
+            answers = [
+                Answer(answer_text='sink', is_correct=False),
+                Answer(answer_text='drink', is_correct=True),
+                Answer(answer_text='plink', is_correct=False),
+                Answer(answer_text='clink', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='sleep').first().id,
+            answers = [
+                Answer(answer_text='sleep', is_correct=True),
+                Answer(answer_text='sheep', is_correct=False),
+                Answer(answer_text='beep', is_correct=False),
+                Answer(answer_text='feet', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='walk').first().id,
+            answers = [
+                Answer(answer_text='stalk', is_correct=False),
+                Answer(answer_text='talk', is_correct=False),
+                Answer(answer_text='watt', is_correct=False),
+                Answer(answer_text='walk', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='run').first().id,
+            answers = [
+                Answer(answer_text='bun', is_correct=False),
+                Answer(answer_text='run', is_correct=True),
+                Answer(answer_text='sun', is_correct=False),
+                Answer(answer_text='gun', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='play').first().id,
+            answers = [
+                Answer(answer_text='slay', is_correct=False),
+                Answer(answer_text='fei', is_correct=False),
+                Answer(answer_text='play', is_correct=True),
+                Answer(answer_text='clay', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='work').first().id,
+            answers = [
+                Answer(answer_text='work', is_correct=True),
+                Answer(answer_text='were', is_correct=False),
+                Answer(answer_text='wok', is_correct=False),
+                Answer(answer_text='slice', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='study').first().id,
+            answers = [
+                Answer(answer_text='study', is_correct=True),
+                Answer(answer_text='spud', is_correct=False),
+                Answer(answer_text='muddy', is_correct=False),
+                Answer(answer_text='funny', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='am').first().id,
+            answers = [
+                Answer(answer_text='ham', is_correct=False),
+                Answer(answer_text='sham', is_correct=False),
+                Answer(answer_text='slam', is_correct=False),
+                Answer(answer_text='am', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='do').first().id,
+            answers = [
+                Answer(answer_text='do', is_correct=True),
+                Answer(answer_text='show', is_correct=False),
+                Answer(answer_text='few', is_correct=False),
+                Answer(answer_text='crew', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='understand').first().id,
+            answers = [
+                Answer(answer_text='understand', is_correct=True),
+                Answer(answer_text='slumber', is_correct=False),
+                Answer(answer_text='blunder', is_correct=False),
+                Answer(answer_text='thunder', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='repeat').first().id,
+            answers = [
+                Answer(answer_text='repeat', is_correct=True),
+                Answer(answer_text='seat', is_correct=False),
+                Answer(answer_text='creep', is_correct=False),
+                Answer(answer_text='concrete', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='not').first().id,
+            answers = [
+                Answer(answer_text='not', is_correct=True),
+                Answer(answer_text='cop', is_correct=False),
+                Answer(answer_text='stop', is_correct=False),
+                Answer(answer_text='tot', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='can').first().id,
+            answers = [
+                Answer(answer_text='fan', is_correct=False),
+                Answer(answer_text='can', is_correct=True),
+                Answer(answer_text='slam', is_correct=False),
+                Answer(answer_text='van', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='like').first().id,
+            answers = [
+                Answer(answer_text='bike', is_correct=False),
+                Answer(answer_text='kite', is_correct=False),
+                Answer(answer_text='pike', is_correct=False),
+                Answer(answer_text='like', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='live').first().id,
+            answers = [
+                Answer(answer_text='live', is_correct=True),
+                Answer(answer_text='life', is_correct=False),
+                Answer(answer_text='light', is_correct=False),
+                Answer(answer_text='sight', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='a').first().id,
+            answers = [
+                Answer(answer_text='a', is_correct=True),
+                Answer(answer_text='to', is_correct=False),
+                Answer(answer_text='ate', is_correct=False),
+                Answer(answer_text='bait', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='that').first().id,
+            answers = [
+                Answer(answer_text='this', is_correct=False),
+                Answer(answer_text='bat', is_correct=False),
+                Answer(answer_text='cat', is_correct=False),
+                Answer(answer_text='that', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='what').first().id,
+            answers = [
+                Answer(answer_text='when', is_correct=False),
+                Answer(answer_text='where', is_correct=False),
+                Answer(answer_text='weather', is_correct=False),
+                Answer(answer_text='what', is_correct=True),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='where').first().id,
+            answers = [
+                Answer(answer_text='here', is_correct=False),
+                Answer(answer_text='there', is_correct=False),
+                Answer(answer_text='where', is_correct=True),
+                Answer(answer_text='sear', is_correct=False),
+            ]
+        ),
+        Question(
+            question_text = 'Qué escuchas',
+            audio_file = '',
+            word_id = db.session.query(Word).filter_by(word='how').first().id,
+            answers = [
+                Answer(answer_text='cow', is_correct=False),
+                Answer(answer_text='plow', is_correct=False),
+                Answer(answer_text='loud', is_correct=False),
+                Answer(answer_text='how', is_correct=True),
+            ]
+        ),
+    ]
+
     lesson1 = Lesson(
         title = 'Pronouns',
         difficulty = 'Beginner',
         user_id = None,
-        description = " This is learning the Basics - 1",
-        questions = "Qué escuchas"
+        description = " This is learning the Basics - 1"
     )
-    lesson1.words.extend(words[0:13])
+    lesson1.words.extend(words[0:18])
+    lesson1.questions.extend(lesson1_questions)
 
     lesson2 =Lesson(
         title = 'Verbs',
@@ -371,7 +847,8 @@ def seed_lessons():
         description = " This is learning the Basics - 2",
         questions = "Qué escuchas"
     )
-    lesson2.words.extend(words[24:34])
+    lesson2.words.extend(words[34:57])
+    lesson2.questions.extend(lesson2_questions)
 
     lesson3 = Lesson(
         title = 'Adjectives',
@@ -380,7 +857,7 @@ def seed_lessons():
         description = " This is learning the Basics - 3",
         questions = "Qué escuchas"
     )
-    lesson3.words.extend(words[14:23])
+    lesson3.words.extend(words[19:33])
 
     lesson4 = Lesson(
         title = 'Etiquette',

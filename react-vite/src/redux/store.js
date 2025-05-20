@@ -8,13 +8,15 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import lessonReducer from "./lesson";
 import wordReducer from "./word";
-import phraseReducer from "./phrase"
+import phraseReducer from "./phrase";
+// import translateReducer from "./translate";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   lesson: lessonReducer,
   word: wordReducer,
-  phrase: phraseReducer
+  phrase: phraseReducer,
+  // translate: translateReducer
 });
 
 let enhancer;

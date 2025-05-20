@@ -11,7 +11,7 @@ from .api.words_routes import word_routes
 from .api.phrase_routes import phrase_routes
 from .api.lesson_routes import lesson_routes
 from .api.translate_route import translate_routes
-from .api.dictionary_route import dictionary_routes
+from .api.dictionary_api_route import dictionary_routes
 from .seeds import seed_commands
 from .config import Config
 

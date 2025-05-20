@@ -43,43 +43,43 @@ class User(db.Model, UserMixin):
 
     # @property
     # def user_id(self):
-    #     return self.id
+    #     return self._id
     
-    # @property
-    # def score(self):
-    #     return self._score
+    @property
+    def user_score(self):
+        return self.score
     
-    # @score.setter
-    # def score(self, new_score):
-    #     self._score = new_score
-    #     self._update_level()
+    @user_score.setter
+    def user_score(self, new_score):
+        self.score = new_score
+        self._update_level()
     
-    # @property
-    # def level(self):
-    #     return self._level
+    @property
+    def user_level(self):
+        return self.level
     
-    # @level.setter
-    # def level(self, new_level):
-    #     self._level = new_level
+    @user_level.setter
+    def user_level(self, new_level):
+        self.level = new_level
 
-    # def _update_level(self):
-    #     new_level = self._calculate_level(self._score)
-    #     if new_level != self._level:
-    #         self._level = new_level
-    #         print(f"User {self.id} leveled up to {self._level}")
+    def _update_level(self):
+        new_level = self._calculate_level(self.score)
+        if new_level != self.level:
+            self.level = new_level
+            print(f"User {self.id} leveled up to {self.level}")
 
-    # def _calculate_level(self, score):
+    def _calculate_level(self, score):
 
-    #     LEVEL_RANGES = [
-    #         (0, "Beginner"),
-    #         (300, "Intermediate"),
-    #         (750, "Advanced"),
-    #         (1001, "Expert")
-    #     ]
-    #     for min_score, level_name in LEVEL_RANGES:
-    #         if score < min_score:
-    #             return LEVEL_RANGES[LEVEL_RANGES.index((min_score, level_name))-1][1] if LEVEL_RANGES.index((min_score, level_name)) > 0 else LEVEL_RANGES[0][1]
-    #         return LEVEL_RANGES[-1][1]
+        LEVEL_RANGES = [
+            (0, "Beginner"),
+            (300, "Intermediate"),
+            (750, "Advanced"),
+            (1001, "Expert")
+        ]
+        for min_score, level_name in LEVEL_RANGES:
+            if score < min_score:
+                return LEVEL_RANGES[LEVEL_RANGES.index((min_score, level_name))-1][1] if LEVEL_RANGES.index((min_score, level_name)) > 0 else LEVEL_RANGES[0][1]
+            return LEVEL_RANGES[-1][1]
 
     def to_dict(self):
         return {

@@ -10,8 +10,8 @@ def translate_text():
 
     data = request.get_json()
     text = data.get('text')
-    source_lang = "es"
-    target_lang = "en"
+    source_lang = data.get('source_lang')
+    target_lang = data.get('target_lang')
 
     if not text or not source_lang or not target_lang:
         return {"errors": "Missing required fields"}, 400

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchLearnedWords } from "../redux/word";
-import { addPhrase } from "../redux/phrase";
+import { fetchLearnedWords } from "../../redux/word";
+import { addPhrase } from "../../redux/phrase";
 import './PhraseBuilder.css'
 
 

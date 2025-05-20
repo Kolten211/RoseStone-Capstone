@@ -16,7 +16,7 @@ function UpdateWord() {
     const { closeModal } = useModal();
     
     const [loading, setLoading] = useState(true)
-    const [audioBlob, setAudioBlob] = useState(null)
+    const [audioBlob, setAudioBlob] = useState("")
     const [part_of_speech, setPartOfSpeech] = useState("")
     const [translation, setTranslation] = useState("")
     const [word, setWord] = useState("")
@@ -30,14 +30,14 @@ function UpdateWord() {
 
     const wordInfo = useSelector((state) => state.word);
     console.log(wordInfo)
-    const learned_word = wordInfo
+    const learned_word = wordInfo[0]
     console.log("WordData", learned_word)
     useEffect(() => {
         if (learned_word) {
             setAudioBlob(learned_word.audio_url)
-            setPartOfSpeech(learned_word.part_of_speech)
+            setPartOfSpeech(learned_word.word.part_of_speech)
             setTranslation(learned_word.translation)
-            setWord(learned_word.word)
+            setWord(learned_word.word.word)
         }
     }, []);
 
@@ -84,7 +84,7 @@ function UpdateWord() {
         <form onSubmit={handleSubmit}>
             <h1 className="title">Actualizar palabra</h1>
             <h3>Puedes añadir una grabación de ti diciendo la palabra</h3>
-            <label className="word-label">Learned palabra</label><p>{learned_word.word}</p>
+            <label className="word-label">Learned palabra</label><p>{learned_word.word.word}</p>
             <label className="audio">Audio
                <VoiceRecorder onAudioRecorded={handleAudioRecorded} />
             </label>

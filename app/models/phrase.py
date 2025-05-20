@@ -1,5 +1,4 @@
 from .db import db, environment, SCHEMA
-from sqlalchemy.orm import relationship
 
 class Phrase(db.Model):
     __tablename__ = 'phrases'
@@ -11,7 +10,7 @@ class Phrase(db.Model):
     phrase = db.Column(db.String(50), nullable = False) ##, unique = True
     translation = db.Column(db.String(50))
    
-    lessons = relationship('Lesson', secondary='lessons_phrases', backref=db.backref('Sentences', lazy=True))
+    lessons = db.relationship('Lesson', secondary='lessons_phrases', back_populates= 'phrases', lazy='dynamic')
 
     def to_dict(self):
         return {

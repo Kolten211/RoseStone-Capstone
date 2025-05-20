@@ -21,7 +21,8 @@ function VoiceRecorder({ onAudioRecorded }) {
     //     console.log(audioContext.current)
     // }, []);
 
-    const startRecording = async () => {
+    const startRecording = async (event) => {
+        event.preventDefault()
         try {
             stream.current = await navigator.mediaDevices.getUserMedia({ audio: true});
             mediaRecorder.current = new MediaRecorder(stream.current);
@@ -68,7 +69,8 @@ function VoiceRecorder({ onAudioRecorded }) {
         // }
     }
 
-    const stopRecording = () => {
+    const stopRecording = (event) => {
+        event.preventDefault()
         if (mediaRecorder.current && mediaRecorder.current.state === 'recording') {
             mediaRecorder.current.stop();
             setIsRecording(false);
@@ -102,10 +104,10 @@ function VoiceRecorder({ onAudioRecorded }) {
 
     return (
         <div>
-            <button onClick={startRecording} disabled={isRecording}>
+            <button type="button" onClick={startRecording} disabled={isRecording}>
                 Start
             </button>
-            <button onClick={stopRecording} disabled={!isRecording}>
+            <button type="button" onClick={stopRecording} disabled={!isRecording}>
                 Stop
             </button>
             {/* <button onClick={pauseRecording} disabled={!isRecording}>

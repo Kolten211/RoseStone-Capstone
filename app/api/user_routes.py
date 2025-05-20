@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
+from app.models.db import db
 from app.models import User
 
 user_routes = Blueprint('users', __name__)
@@ -24,3 +25,17 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/<int:user_id>/score')
+def update_user_score(user_id):
+    data = request.get_json()
+    new_score = data.get('score')
+
+    user = User.query.get(user_id)
+    if not user:
+        return{'message': "User not found"}
+    
+    user.user_score = new_score
+    db.session.commit()
+
+    return {'message': 'Score updates successfully'}
