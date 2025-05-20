@@ -65,10 +65,6 @@ def get_dictionary_meaning():
         response.raise_for_status()
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
-        print(f"Access Key ID being used: {credentials.token}")
-        print(f"Unexpected error: {e}")
         return {'error': str(e)}, 500
     except Exception as e:
-        print(f"Access Key ID being used: {api_gateway_hostname}")
-        print(f"Unexpected error: {e}")
         return {'error': 'An unexpected error occured'}, 500
