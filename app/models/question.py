@@ -12,5 +12,5 @@ class Question(db.Model):
     word_id = db.Column(db.Integer, db.ForeignKey('words.id'))
     
     word = db.relationship('Word')
-    answers = db.relationship('Answer', backref=db.backref('questions'))
+    answers = db.relationship('Answer', backref=db.backref('questions'), lazy=True)
     lessons = db.relationship('Lesson', secondary='lesson_question', back_populates="questions")

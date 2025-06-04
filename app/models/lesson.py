@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
+
 class Lesson(db.Model):
     __tablename__='lessons'
 
@@ -29,6 +30,3 @@ class Lesson(db.Model):
         }
     
 
-from .word import Word
-from .phrase import Phrase
-from .user import User

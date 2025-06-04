@@ -124,8 +124,33 @@ def lesson_complete(lesson_id):
     """
 
     lesson = Lesson.query.get(lesson_id)
+    user_answers = request.get_json()
 
+    if not user_answers:
+        return {'message': "No answers provided"}
+    
+    total_questions = len(lesson.questions)
+    correct_count = 0
 
+    lesson_questions = {q.id: {a.id for a in q.answers if a.is_correct} for q in lesson.questions}
+
+    for question_id_str, submitted_answer_id_str in user_answers.items():
+        try: 
+            question_id = int(question_id_str)
+            submitted_answer_id = int(submitted_answer_id_str)
+        except ValueError:
+            return {'error': f"Invalid ID format for question or answer: {question_id_str}, {submitted_answer_id_str}"}
+        if question_id not in lesson_questions:
+            return {'error': f"Question ID {question_id} not part of lesson {lesson_id}"}
+        
+        correct_answer_ids = lesson_questions[question_id]
+
+        if submitted_answer_id in correct_answer_ids:
+            correct_count += 1
+
+    score_percent = (correct_count / total_questions) * 100 if total_questions > 0 else 0
+
+    
     if not lesson:
         return {'message': "No lesson found"}
     
@@ -141,7 +166,7 @@ def lesson_complete(lesson_id):
             learned_phrase = LearnedPhrase(user_id=current_user.id, phrase_id=phrase.id)
             db.session.add(learned_phrase)
     
-    elif lesson.levl == 'Advanced':
+    elif lesson.level == 'Advanced':
         pass
 
     db.session.commit()

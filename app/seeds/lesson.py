@@ -835,7 +835,7 @@ def seed_lessons():
         title = 'Pronouns',
         difficulty = 'Beginner',
         user_id = None,
-        description = " This is learning the Basics - 1"
+        description = "This is learning the Basics - 1"
     )
     lesson1.words.extend(words[0:18])
     lesson1.questions.extend(lesson1_questions)
@@ -844,8 +844,7 @@ def seed_lessons():
         title = 'Verbs',
         difficulty = 'Beginner',
         user_id = None,
-        description = " This is learning the Basics - 2",
-        questions = "Qué escuchas"
+        description = "This is learning the Basics - 2"
     )
     lesson2.words.extend(words[34:57])
     lesson2.questions.extend(lesson2_questions)
@@ -854,8 +853,7 @@ def seed_lessons():
         title = 'Adjectives',
         difficulty = 'Beginner',
         user_id = None,
-        description = " This is learning the Basics - 3",
-        questions = "Qué escuchas"
+        description = "This is learning the Basics - 3"
     )
     lesson3.words.extend(words[19:33])
 
@@ -863,8 +861,7 @@ def seed_lessons():
         title = 'Etiquette',
         difficulty = 'Intermediate',
         user_id = None,
-        description = " Learning to form Sentences - 1",
-        questions = "Qué escuchas"  
+        description = "Learning to form Sentences - 1"  
     )
     lesson4.phrases.extend(phrases[9:])
 
@@ -872,8 +869,7 @@ def seed_lessons():
         title = 'Describe',
         difficulty = 'Intermediate',
         user_id = None,
-        description = " Learning to form Sentences - 2" ,
-        questions = "Qué escuchas"
+        description = "Learning to form Sentences - 2" 
     )
     lesson5.phrases.extend(phrases[0:4])
 
@@ -881,8 +877,7 @@ def seed_lessons():
         title = 'Questions',
         difficulty = 'Intermediate',
         user_id = None,
-        description = " Learning to form Sentences - 3",
-        questions = "Qué escuchas" 
+        description = "Learning to form Sentences - 3" 
     )
     lesson6.phrases.extend(phrases[5:8])
 
@@ -901,12 +896,22 @@ def undo_lessons():
         db.session.execute(f"TRUNCATE table {SCHEMA}.lessons_phrases RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.words RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.phrases RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.questions RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.answers RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.lesson_question RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.learned_words RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.learned_phrases RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM lessons"))
         db.session.execute(text("DELETE FROM lessons_words"))
         db.session.execute(text("DELETE FROM lessons_phrases"))
         db.session.execute(text("DELETE FROM words"))
         db.session.execute(text("DELETE FROM phrases"))
+        db.session.execute(text("DELETE FROM questions"))
+        db.session.execute(text("DELETE FROM answers"))
+        db.session.execute(text("DELETE FROM lesson_question"))
+        db.session.execute(text("DELETE FROM learned_phrases"))
+        db.session.execute(text("DELETE FROM learned_words"))
     
     db.session.commit()
 

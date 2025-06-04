@@ -1,6 +1,4 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from app.models import Word, Lesson
-from sqlalchemy.orm import relationship
 
 class LessonWord(db.Model):
     __tablename__ = 'lessons_words'
