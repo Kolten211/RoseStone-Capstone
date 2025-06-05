@@ -10,4 +10,5 @@ from .lesson_phrases import LessonPhrase
 from .user_words import LearnedWord
 from .user_phrases import LearnedPhrase
 from .lesson_questions import LessonQuestion
+from .quiz_attempts import QuizAttempt
 from .db import environment, SCHEMA

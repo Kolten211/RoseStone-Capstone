@@ -19,6 +19,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    quiz_attempts = db.relationship("QuizAttempt", back_populates = "user", cascade = "all, delete-orphan")
+
     # def __init__(self,*args, **kwargs):
     #     super(User, self).__init__(*args, **kwargs)
     #     self._score = kwargs.get('score', 0)

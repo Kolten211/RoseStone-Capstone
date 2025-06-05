@@ -18,6 +18,7 @@ class Lesson(db.Model):
     questions = db.relationship('Question', secondary='lesson_question', back_populates="lessons")
     words = db.relationship('Word', secondary='lessons_words', back_populates= "lessons", lazy='dynamic')
     phrases = db.relationship('Phrase', secondary='lessons_phrases', back_populates= "lessons", lazy='dynamic')
+    quiz_attempts = db.relationship('QuizAttempt', back_populates = 'lesson', cascade = 'all, delete-orphan')
 
     def to_dict(self):
         return {

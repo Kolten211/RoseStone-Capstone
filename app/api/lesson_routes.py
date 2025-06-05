@@ -150,7 +150,7 @@ def lesson_complete(lesson_id):
 
     score_percent = (correct_count / total_questions) * 100 if total_questions > 0 else 0
 
-    
+
     if not lesson:
         return {'message': "No lesson found"}
     
@@ -170,4 +170,8 @@ def lesson_complete(lesson_id):
         pass
 
     db.session.commit()
-    return {'message': 'Lesson Completed!'}
+    return {
+        'message': 'Lesson Completed!',
+        'score': score_percent,
+        'correct_answers': total_questions,
+        }
