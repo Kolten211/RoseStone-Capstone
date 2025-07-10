@@ -10,10 +10,14 @@ def seed_users():
         username='Maria', email='maria@aa.io', password='password', level='Intermediate', score=300, native_language="Spanish", learning_language="English")
     roberto = User(
         username='Roberto', email='roberto@aa.io', password='password', level='Advanced', score=750, native_language="Spanish", learning_language="English")
+    alice = User(
+        username="WhiteRabbit", email='lostinwonderland@aa.io', password='password',level='Beginner', score=0, native_language="Spanish", learning_language="English"
+    )
 
     db.session.add(demo)
     db.session.add(maria)
     db.session.add(roberto)
+    db.session.add(alice)
     db.session.commit()
 
 

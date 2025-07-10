@@ -74,8 +74,8 @@ function LessonDetails() {
 
             {showTest && (
                 <div>
-                    {/* <h2 className='lesson-title'>Test</h2>
-                    <h3 className='lesson-h3'>Feature coming soon / Función próximamente </h3> */}
+                    <h2 className='lesson-title'>Test</h2>
+                    {/* <h3 className='lesson-h3'>Feature coming soon / Función próximamente </h3> */}
                     <Quiz />
                 </div>
             )}

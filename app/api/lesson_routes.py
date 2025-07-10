@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models.db import db
 from app.models import Lesson, Word, Phrase, LearnedWord, LearnedPhrase, User
@@ -25,7 +25,7 @@ def lesson_details(lesson_id):
     """
 
     lesson = Lesson.query.get(lesson_id)
-
+    print("lessons", lesson)
     if not lesson:
         return {'message': 'Lesson not found'}, 404
     
@@ -38,8 +38,30 @@ def lesson_details(lesson_id):
         'user_id': lesson.user_id,
         'description': lesson.description,
         'words': [word.to_dict() for word in words],
-        'phrases': [phrase.to_dict() for phrase in phrases]
+        'phrases': [phrase.to_dict() for phrase in phrases],
         }
+
+@lesson_routes.route('/<int:lesson_id>/questions')
+@login_required
+def get_questions(lesson_id):
+    lesson = Lesson.query.get_or_404(lesson_id)
+    question_date = []
+    for question in lesson.questions:
+        answers_data = []
+        for answer in question.answers:
+            answers_data.append({
+                'id': answer.id,
+                'answer_text': answer.answer_text,
+                'is_correct': answer.is_correct
+            })
+        
+        question_date.append({
+            'id': question.id,
+            'question_text': question.question_text,
+            'answers': answers_data
+        })
+
+    return jsonify(question_date)
 
 @lesson_routes.route('/create', methods=['POST'])
 @login_required
@@ -124,9 +146,11 @@ def lesson_complete(lesson_id):
     """
 
     lesson = Lesson.query.get(lesson_id)
-    user_answers = request.get_json()
-
-    if not user_answers:
+    print("LObject", lesson)
+    data = request.get_json()
+    print("userselection", data)
+    user_answers = data.get('userSelection')
+    if not data:
         return {'message': "No answers provided"}
     
     total_questions = len(lesson.questions)
@@ -149,24 +173,27 @@ def lesson_complete(lesson_id):
             correct_count += 1
 
     score_percent = (correct_count / total_questions) * 100 if total_questions > 0 else 0
+    print(f"Lesson level: {lesson.difficulty}")
+    print(f"Current user ID: {current_user.id}")
 
 
     if not lesson:
         return {'message': "No lesson found"}
     
-    if lesson.level == 'beginner':
+    if lesson.difficulty == 'Beginner':
         lesson_words = lesson.words
         for word in lesson_words:
+            print(f"Adding word: {word} (ID: {word.id})")
             learned_word = LearnedWord(user_id=current_user.id, word_id=word.id)
             db.session.add(learned_word)
 
-    elif lesson.level == 'intermediate':
+    elif lesson.difficulty == 'Intermediate':
         lesson_phrase = lesson.phrases
         for phrase in lesson_phrase:
             learned_phrase = LearnedPhrase(user_id=current_user.id, phrase_id=phrase.id)
             db.session.add(learned_phrase)
     
-    elif lesson.level == 'Advanced':
+    elif lesson.difficulty == 'Advanced':
         pass
 
     db.session.commit()

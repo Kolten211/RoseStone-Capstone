@@ -27,7 +27,7 @@ class Lesson(db.Model):
             'difficulty': self.difficulty,
             'user_id': self.user_id,
             'decription': self.description,
-            "questions": self.questions
+            # "questions": self.questions
         }
     
 

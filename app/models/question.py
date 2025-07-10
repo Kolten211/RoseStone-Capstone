@@ -14,3 +14,12 @@ class Question(db.Model):
     word = db.relationship('Word')
     answers = db.relationship('Answer', backref=db.backref('questions'), lazy=True)
     lessons = db.relationship('Lesson', secondary='lesson_question', back_populates="questions")
+
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'question_text': self.question_text,
+            'audio_file': self.audio_file,
+            'word_id': self.word_id,
+        }
